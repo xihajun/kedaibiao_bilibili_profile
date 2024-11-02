@@ -1,4 +1,4 @@
-# ArtifactBin Template Project
+# 课代表
 
 Welcome to the ArtifactBin template project! This repository serves as a starting point for deploying React components created on [ArtifactBin.com](https://artifactbin.com) to Vercel.
 
