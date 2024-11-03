@@ -16,26 +16,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='zh'>
-      <body className={inter.className}>
-        {children}
-        <footer className="border-t border-gray-200 bg-white">
+    <html lang='zh' className="dark">
+      <body className={`${inter.className} bg-gray-900 text-gray-100`}>
+        <main className="min-h-screen">
+          {children}
+        </main>
+        
+        <footer className="border-t border-gray-800 bg-gray-900">
           <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
               <div className="flex flex-col items-center md:items-start space-y-4 md:space-y-2">
-                <span className="text-sm text-gray-600">
-                  © {new Date().getFullYear()} 课代表知识宇宙. All rights reserved.
+                <span className="text-sm text-gray-400">
+                  © {new Date().getFullYear()} 课代表立正. All rights reserved.
                 </span>
                 <div className="flex items-center space-x-4">
                   <a
                     href="https://www.youtube.com/@kedaibiao"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors duration-200"
+                    className="flex items-center space-x-1 text-gray-400 hover:text-red-400 transition-colors duration-200 group"
                     title="Subscribe on YouTube"
                   >
-                    <Youtube size={20} />
-                    <span className="text-sm">课代表</span>
+                    <Youtube 
+                      size={20} 
+                      className="group-hover:animate-pulse"
+                    />
+                    <span className="text-sm">课代表立正</span>
                   </a>
                 </div>
               </div>
@@ -44,9 +50,9 @@ export default function RootLayout({
                 href="https://artifactbin.com?utm_source=template-repo&utm_campaign=oss"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center text-sm text-emerald-600 hover:text-emerald-700 transition-colors duration-200"
+                className="flex items-center text-sm text-emerald-400 hover:text-emerald-300 transition-colors duration-200"
               >
-                <span>Deployed by Artifact Bin</span>
+                <span>Used Artifact Bin</span>
               </a>
             </div>
           </div>
