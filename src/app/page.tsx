@@ -45,68 +45,175 @@ const KnowledgeUniverse = () => {
 
   // 核心嘉宾数据
   const mainGuests = [
-    {
-      id: 1,
-      name: "Leon",
-      role: "Financial Expert",
-      category: "thinking",
-      episodes: [
-        { 
-          title: "如何积累第一桶金",
-          views: 118526,
-          url: "https://www.youtube.com/watch?v=9opd3YjEr14"
-        }
-      ],
-      totalViews: 118526,
-    },
-    {
-      id: 2,
-      name: "硅谷徐老师",
-      role: "Tech Leader",
-      category: "tech",
-      episodes: [
-        { 
-          title: "AI元年复盘",
-          views: 135624,
-          url: "https://www.youtube.com/watch?v=awaZBWTss-4"
-        }
-      ],
-      totalViews: 135624,
-    },
-    {
-      id: 3,
-      name: "YC",
-      role: "Product Leader",
-      category: "career",
-      episodes: [
-        {
-          title: "90后首席产品官",
-          views: 9090,
-          url: "https://www.youtube.com/watch?v=WDSPYtv8rXY"
-        }
-      ],
-      totalViews: 9090,
-    }
-  ];
+  {
+    "id": 1,
+    "name": "硅谷徐老师",
+    "role": "Tech Leader",
+    "category": "tech",
+    "episodes": [
+      {
+        "title": "AI元年复盘：如何独立思考，抓住未来机会？｜硅谷徐老师（上）",
+        "views": 130000,
+        "url": "https://www.youtube.com/watch?v=awaZBWTss-4&t=44s",
+        "uploadTime": "10个月前"
+      },
+      {
+        "title": "2024剧变之年，如何抓住人生机会？| 硅谷徐老师（中）",
+        "views": 54000,
+        "url": "https://www.youtube.com/watch?v=PWqmRub9wdI",
+        "uploadTime": "10个月前"
+      },
+      {
+        "title": "90%的工作都没价值？｜噪音时代，如何获取有价值的信息？｜硅谷徐老师访谈 3/3",
+        "views": 30000,
+        "url": "https://www.youtube.com/watch?v=P-frv84l3Fk&t=521s",
+        "uploadTime": "6个月前"
+      },
+      {
+        "title": "问硅谷华人高管：竹子天花板存在吗？｜和硅谷徐老师一起拉票",
+        "views": 7803,
+        "url": "https://www.youtube.com/watch?v=omAUYRo3Fvc",
+        "uploadTime": "3个月前"
+      }
+    ],
+    "totalViews": 221803
+  },
+  {
+    "id": 2,
+    "name": "Leon",
+    "role": "Financial Expert",
+    "category": "life",
+    "episodes": [
+      {
+        "title": "如何积累第一桶金？｜摆脱韭菜思维的最后一次努力｜Leon访谈_上",
+        "views": 110000,
+        "url": "https://www.youtube.com/watch?v=9opd3YjEr14",
+        "uploadTime": "9个月前"
+      },
+      {
+        "title": "如何超越中产阶级？｜Leon谈财富_下",
+        "views": 100000,
+        "url": "https://www.youtube.com/watch?v=FsYCf_YuYvs&t=819s",
+        "uploadTime": "8个月前"
+      }
+    ],
+    "totalViews": 210000
+  },
+  {
+    "id": 3,
+    "name": "Kevin教授",
+    "role": "Academic Expert",
+    "category": "thinking",
+    "episodes": [
+      {
+        "title": "提升判断力的关键？｜驱动科技进步靠什么？｜Kevin教授上",
+        "views": 30000,
+        "url": "https://www.youtube.com/watch?v=6FvFgTWO9BU",
+        "uploadTime": "9个月前"
+      },
+      {
+        "title": "看懂人类顶尖科研，才能理解科学的局限｜Kevin教授_2/3",
+        "views": 11000,
+        "url": "https://www.youtube.com/watch?v=2fpnJlHPhGA",
+        "uploadTime": "8个月前"
+      },
+      {
+        "title": "MIT教授vs.康奈尔博士：科学重要吗？｜Kevin教授_3/3",
+        "views": 10000,
+        "url": "https://www.youtube.com/watch?v=UlZJd6XpkAQ&t=8s",
+        "uploadTime": "7个月前"
+      },
+      {
+        "title": "MIT教授：为什么聪明人容易犯错？",
+        "views": 4942,
+        "url": "https://www.youtube.com/watch?v=vwoj6fHdxNI",
+        "uploadTime": "1年前"
+      }
+    ],
+    "totalViews": 55942
+  },
+  {
+    "id": 4,
+    "name": "杨帆",
+    "role": "Business Leader",
+    "category": "career",
+    "episodes": [
+      {
+        "title": "如何越级搞定大佬？｜杨帆1/4",
+        "views": 13000,
+        "url": "https://www.youtube.com/watch?v=DCwVgje4JZA",
+        "uploadTime": "9个月前"
+      },
+      {
+        "title": "如何用”玩“来降维打击工作？｜杨帆4/4",
+        "views": 11000,
+        "url": "https://www.youtube.com/watch?v=t9opGmGaJAI",
+        "uploadTime": "9个月前"
+      },
+      {
+        "title": "年轻人为什么忽视制造业巨头？｜杨帆2/4",
+        "views": 9245,
+        "url": "https://www.youtube.com/watch?v=cQxoilIZfTc&t=1s",
+        "uploadTime": "9个月前"
+      },
+      {
+        "title": "如何理解00后？自媒体有多赚钱？｜杨帆3/4",
+        "views": 6130,
+        "url": "https://www.youtube.com/watch?v=tGB9IbZhEO0",
+        "uploadTime": "9个月前"
+      }
+    ],
+    "totalViews": 39375
+  }
+];
+
 
   // 访谈嘉宾数据
   const guestStars = [
-    {
-      id: 4,
-      name: "小露",
-      role: "亚马逊PM",
-      category: "career",
-      episodes: [
-        {
-          title: "不是主业不给力，副业更有性价比",
-          views: 6611,
-          url: "https://www.youtube.com/watch?v=MWt3Zo1oC70"
-        }
-      ],
-      totalViews: 6611,
-    }
+    {
+      "id": 5,
+      "name": "YC",
+      "role": "Product Leader",
+      "category": "career",
+      "episodes": [
+        {
+          "title": "90后首席产品官，如何成功适应新工作？｜YC访谈1/3",
+          "views": 9390,
+          "url": "https://www.youtube.com/watch?v=WDSPYtv8rXY",
+          "uploadTime": "1个月前"
+        }
+      ],
+      "totalViews": 9390
+    },
+    {
+      "id": 6,
+      "name": "Riley",
+      "role": "Career Coach",
+      "category": "thinking",
+      "episodes": [
+        {
+          "title": "工作中没有自己想法，是怎么回事？| Riley 4/5",
+          "views": 2759,
+          "url": "https://www.youtube.com/watch?v=o-RlaLqTdLQ&t=20s",
+          "uploadTime": "1年前"
+        },
+        {
+          "title": "人生最大的真相｜Riley 3/5",
+          "views": 2401,
+          "url": "https://www.youtube.com/watch?v=4iKB7_YH1wc",
+          "uploadTime": "1年前"
+        },
+        {
+          "title": "第一个追随者才是真正的leader｜Riley聊天5/5",
+          "views": 2336,
+          "url": "https://www.youtube.com/watch?v=fy8bpHXqw6Q",
+          "uploadTime": "1年前"
+        }
+      ],
+      "totalViews": 7496
+    }
   ];
-
+    
   const calculateOrbitPosition = (index, total, radius, offset = 0) => {
     const angle = (index * 2 * Math.PI) / total + offset;
     return {
