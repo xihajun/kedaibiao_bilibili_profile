@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -67,6 +68,7 @@ const KnowledgeUniverse = () => {
       icon: Coffee,
     },
   };
+
 
   // Main guests data
   const allGuests = [
@@ -2656,7 +2658,7 @@ const KnowledgeUniverse = () => {
 
       {/* 嘉宾信息卡片 */}
       {selectedGuest && (
-        <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white">
+        <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white z-[100]">
           <CardContent className="p-6">
             <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
             <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
@@ -2665,7 +2667,10 @@ const KnowledgeUniverse = () => {
                 <div 
                   key={index} 
                   className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
-                  onClick={() => setSelectedVideo(episode)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedVideo(episode);
+                  }}
                 >
                   <div className="flex items-center gap-3">
                     <Video className="w-5 h-5 text-gray-400" />
@@ -2693,4 +2698,3 @@ const KnowledgeUniverse = () => {
 };
 
 export default KnowledgeUniverse;
-
