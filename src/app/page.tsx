@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +8,13 @@ const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  
+  // 拖拽和缩放状态
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [translate, setTranslate] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -23,6 +29,48 @@ const KnowledgeUniverse = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // 拖拽事件处理
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - translate.x, y: e.clientY - translate.y });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      setTranslate({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragStart]);
+
+  // 缩放事件处理
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = -e.deltaY / 500;
+    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2));
+  };
+
 
   const categories = {
     consulting_career: {
@@ -2504,22 +2552,20 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-  // 按总观看量排序并筛选主要嘉宾（前20名）
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(0, 20);
 
-  // 其余嘉宾作为访谈嘉宾
   const guestStars = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(20);
 
-  const calculateOrbitPosition = (index, total, radius, offset = 0) => {
-    const adjustedRadius = radius * 2;
+  const calculateOrbitPosition = (index, total, baseRadius, offset = 0) => {
+    const radius = baseRadius + Math.min(Math.floor(total / 10) * 10, 50); // 动态调整半径
     const angle = (index * 2 * Math.PI) / total + offset;
     return {
-      left: `${50 + adjustedRadius * Math.cos(angle)}%`,
-      top: `${50 + (adjustedRadius * 0.8) * Math.sin(angle)}%`
+      left: `${50 + radius * Math.cos(angle)}%`,
+      top: `${50 + (radius * 0.8) * Math.sin(angle)}%`
     };
   };
 
@@ -2548,8 +2594,17 @@ const KnowledgeUniverse = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-gray-900 text-white overflow-hidden">
-      {/* 中心太阳（课代表） */}
+    <div
+      className="relative w-full h-screen bg-gray-900 text-white overflow-hidden cursor-grab"
+      onMouseDown={handleMouseDown}
+      onWheel={handleWheel}
+      style={{
+        transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
+        cursor: isDragging ? 'grabbing' : 'grab',
+        transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+      }}
+    >
+      {/* 中心太阳（课代表）保持不变 */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
         <div className="w-40 h-40 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 animate-pulse flex items-center justify-center shadow-lg shadow-yellow-500/50">
           <Sun size={72} className="text-yellow-100" />
@@ -2559,7 +2614,7 @@ const KnowledgeUniverse = () => {
         </div>
       </div>
 
-      {/* 分类指示器 */}
+      {/* 分类指示器保持不变 */}
       {Object.entries(categories).map(([key, category], index) => {
         const CategoryIcon = category.icon;
         const position = calculateOrbitPosition(index, Object.keys(categories).length, 12);
@@ -2577,7 +2632,7 @@ const KnowledgeUniverse = () => {
               ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
               onClick={() => {
                 setSelectedCategory(isSelected ? null : key);
-                setSelectedGuest(null); // Reset selected guest when changing category
+                setSelectedGuest(null); // 切换类别时重置选中的嘉宾
               }}
             >
               <CategoryIcon size={28} className="text-white" />
@@ -2601,7 +2656,7 @@ const KnowledgeUniverse = () => {
           );
           return (
             <div
-              key={`${guest.id}-${index}`}
+              key={guest.id}
               className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500"
               style={position}
             >
@@ -2635,7 +2690,7 @@ const KnowledgeUniverse = () => {
           );
           return (
             <div
-              key={`${guest.id}-${index}`}
+              key={guest.id}
               className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500"
               style={position}
             >
@@ -2656,7 +2711,7 @@ const KnowledgeUniverse = () => {
           );
         })}
 
-      {/* 嘉宾信息卡片 */}
+      {/* 嘉宾信息卡片保持不变 */}
       {selectedGuest && (
         <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white z-[100]">
           <CardContent className="p-6">
@@ -2691,7 +2746,7 @@ const KnowledgeUniverse = () => {
         </Card>
       )}
 
-      {/* 视频播放弹窗 */}
+      {/* 视频播放弹窗保持不变 */}
       <VideoDialog video={selectedVideo} />
     </div>
   );
