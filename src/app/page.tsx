@@ -2,19 +2,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog';
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  
+
   // 拖拽和缩放状态
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
 
+  const canvasRef = useRef(null);
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +33,8 @@ const KnowledgeUniverse = () => {
 
   // 拖拽事件处理
   const handleMouseDown = (e) => {
+    // 仅在点击非交互元素时触发拖拽
+    if (e.target.closest('.interactive')) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - translate.x, y: e.clientY - translate.y });
   };
@@ -67,10 +70,9 @@ const KnowledgeUniverse = () => {
   // 缩放事件处理
   const handleWheel = (e) => {
     e.preventDefault();
-    const delta = -e.deltaY / 500;
-    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2));
+    const delta = -e.deltaY / 500; // 调整缩放速度
+    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2)); // 限制缩放范围
   };
-
 
   const categories = {
     consulting_career: {
@@ -116,7 +118,6 @@ const KnowledgeUniverse = () => {
       icon: Coffee,
     },
   };
-
 
   // Main guests data
   const allGuests = [
@@ -2552,26 +2553,34 @@ const KnowledgeUniverse = () => {
   }
 ];
 
+  // 按总观看量排序并筛选主要嘉宾（前20名）
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(0, 20);
 
+  // 其余嘉宾作为访谈嘉宾
   const guestStars = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(20);
 
-  const calculateOrbitPosition = (index, total, baseRadius, offset = 0) => {
-    const radius = baseRadius + Math.min(Math.floor(total / 10) * 10, 50); // 动态调整半径
+  // 虚拟画布的大小
+  const canvasSize = 2000; // 2000px x 2000px
+
+  // 中心点
+  const center = canvasSize / 2;
+
+  // 计算轨道位置，使用像素为单位
+  const calculateOrbitPosition = (index, total, radius, offset = 0) => {
     const angle = (index * 2 * Math.PI) / total + offset;
     return {
-      left: `${50 + radius * Math.cos(angle)}%`,
-      top: `${50 + (radius * 0.8) * Math.sin(angle)}%`
+      left: `${center + radius * Math.cos(angle)}px`,
+      top: `${center + radius * Math.sin(angle)}px`
     };
   };
 
   const VideoDialog = ({ video }) => {
     if (!video?.url) return null;
-    
+
     return (
       <Dialog open={!!video} onOpenChange={() => setSelectedVideo(null)}>
         <DialogContent className="sm:max-w-[80vw]">
@@ -2595,159 +2604,184 @@ const KnowledgeUniverse = () => {
 
   return (
     <div
-      className="relative w-full h-screen bg-gray-900 text-white overflow-hidden cursor-grab"
+      className="relative w-full h-screen bg-gray-900 text-white overflow-hidden"
       onMouseDown={handleMouseDown}
       onWheel={handleWheel}
       style={{
-        transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
-        cursor: isDragging ? 'grabbing' : 'grab',
-        transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+        cursor: isDragging ? 'grabbing' : 'grab'
       }}
     >
-      {/* 中心太阳（课代表）保持不变 */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-        <div className="w-40 h-40 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 animate-pulse flex items-center justify-center shadow-lg shadow-yellow-500/50">
-          <Sun size={72} className="text-yellow-100" />
-        </div>
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
-          <div className="text-xl text-yellow-300 font-bold">课代表</div>
-        </div>
-      </div>
-
-      {/* 分类指示器保持不变 */}
-      {Object.entries(categories).map(([key, category], index) => {
-        const CategoryIcon = category.icon;
-        const position = calculateOrbitPosition(index, Object.keys(categories).length, 12);
-        const isSelected = selectedCategory === key;
-        return (
+      {/* 视口 */}
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{
+          overflow: 'hidden'
+        }}
+      >
+        {/* 虚拟画布 */}
+        <div
+          ref={canvasRef}
+          className="relative"
+          style={{
+            width: `${canvasSize}px`,
+            height: `${canvasSize}px`,
+            transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
+            transformOrigin: 'center center',
+            transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+          }}
+        >
+          {/* 中心太阳（课代表） */}
           <div
-            key={key}
-            className={`absolute -translate-x-1/2 -translate-y-1/2 z-40 
-            transition-all duration-300`}
-            style={position}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+            style={{ width: '100px', height: '100px' }}
           >
-            <div 
-              className={`p-4 rounded-full cursor-pointer bg-gradient-to-r ${category.color}
-              transition-all duration-300 hover:scale-110 shadow-lg
-              ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
-              onClick={() => {
-                setSelectedCategory(isSelected ? null : key);
-                setSelectedGuest(null); // 切换类别时重置选中的嘉宾
-              }}
-            >
-              <CategoryIcon size={28} className="text-white" />
+            <div className="w-full h-full rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 animate-pulse flex items-center justify-center shadow-lg shadow-yellow-500/50">
+              <Sun size={48} className="text-yellow-100" />
             </div>
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
-              <div className="text-sm font-bold">{category.name}</div>
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
+              <div className="text-xl text-yellow-300 font-bold">课代表</div>
             </div>
           </div>
-        );
-      })}
 
-      {/* 主要嘉宾轨道 */}
-      {selectedCategory && mainGuests
-        .filter(guest => guest.category === selectedCategory)
-        .map((guest, index, filteredArray) => {
-          const position = calculateOrbitPosition(
-            index, 
-            filteredArray.length, 
-            20,
-            Math.PI / 4
-          );
-          return (
-            <div
-              key={guest.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500"
-              style={position}
-            >
-              <div 
-                className={`w-24 h-24 rounded-full cursor-pointer
-                bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                flex items-center justify-center
-                transition-all duration-300 hover:scale-110 shadow-lg
-                animate-fadeIn`}
-                onClick={() => setSelectedGuest(guest)}
+          {/* 分类指示器 */}
+          {Object.entries(categories).map(([key, category], index) => {
+            const CategoryIcon = category.icon;
+            const radius = 150; // 分类轨道半径
+            const position = calculateOrbitPosition(index, Object.keys(categories).length, radius);
+            const isSelected = selectedCategory === key;
+            return (
+              <div
+                key={key}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 z-40 
+                transition-all duration-300`}
+                style={position}
               >
-                <User size={36} className="text-white" />
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center w-32">
-                  <div className="text-sm font-bold truncate">{guest.name}</div>
-                  <div className="text-xs text-gray-300 truncate">{guest.role?.split(',')[0]}</div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-
-      {/* 访谈嘉宾轨道 */}
-      {selectedCategory && guestStars
-        .filter(guest => guest.category === selectedCategory)
-        .map((guest, index, filteredArray) => {
-          const position = calculateOrbitPosition(
-            index,
-            filteredArray.length,
-            30,
-            Math.PI / 3
-          );
-          return (
-            <div
-              key={guest.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500"
-              style={position}
-            >
-              <div 
-                className={`w-16 h-16 rounded-full cursor-pointer
-                bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                flex items-center justify-center
-                transition-all duration-300 hover:scale-110 shadow-lg
-                animate-fadeIn`}
-                onClick={() => setSelectedGuest(guest)}
-              >
-                <Star size={24} className="text-white" />
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
-                  <div className="text-xs font-bold truncate">{guest.name}</div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-
-      {/* 嘉宾信息卡片保持不变 */}
-      {selectedGuest && (
-        <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white z-[100]">
-          <CardContent className="p-6">
-            <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
-            <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              {selectedGuest.episodes.map((episode, index) => (
                 <div 
-                  key={index} 
-                  className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedVideo(episode);
+                  className={`p-4 rounded-full cursor-pointer bg-gradient-to-r ${category.color}
+                  transition-all duration-300 hover:scale-110 shadow-lg
+                  ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
+                  onClick={() => {
+                    setSelectedCategory(isSelected ? null : key);
+                    setSelectedGuest(null); // Reset selected guest when changing category
                   }}
                 >
-                  <div className="flex items-center gap-3">
-                    <Video className="w-5 h-5 text-gray-400" />
-                    <span className="flex-1 line-clamp-2">{episode.title}</span>
-                  </div>
-                  <div className="text-sm text-gray-400 mt-2">
-                    {episode.views.toLocaleString()} 次观看
-                  </div>
+                  <CategoryIcon size={28} className="text-white" />
                 </div>
-              ))}
-              <div className="mt-4 pt-4 border-t border-gray-700">
-                <div className="text-sm text-gray-300">
-                  总观看: {selectedGuest.totalViews.toLocaleString()}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
+                  <div className="text-sm font-bold">{category.name}</div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            );
+          })}
 
-      {/* 视频播放弹窗保持不变 */}
-      <VideoDialog video={selectedVideo} />
+          {/* 主要嘉宾轨道 */}
+          {selectedCategory && mainGuests
+            .filter(guest => guest.category === selectedCategory)
+            .map((guest, index, filteredArray) => {
+              const radius = 250; // 主要嘉宾轨道半径
+              const position = calculateOrbitPosition(
+                index, 
+                filteredArray.length, 
+                radius,
+                Math.PI / 4
+              );
+              return (
+                <div
+                  key={guest.id}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 interactive"
+                  style={position}
+                >
+                  <div 
+                    className={`w-24 h-24 rounded-full cursor-pointer
+                    bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
+                    flex items-center justify-center
+                    transition-all duration-300 hover:scale-110 shadow-lg
+                    animate-fadeIn`}
+                    onClick={() => setSelectedGuest(guest)}
+                  >
+                    <User size={36} className="text-white" />
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center w-32">
+                      <div className="text-sm font-bold truncate">{guest.name}</div>
+                      <div className="text-xs text-gray-300 truncate">{guest.role?.split(',')[0]}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+          {/* 访谈嘉宾轨道 */}
+          {selectedCategory && guestStars
+            .filter(guest => guest.category === selectedCategory)
+            .map((guest, index, filteredArray) => {
+              const radius = 350; // 访谈嘉宾轨道半径
+              const position = calculateOrbitPosition(
+                index,
+                filteredArray.length,
+                radius,
+                Math.PI / 3
+              );
+              return (
+                <div
+                  key={guest.id}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 interactive"
+                  style={position}
+                >
+                  <div 
+                    className={`w-16 h-16 rounded-full cursor-pointer
+                    bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
+                    flex items-center justify-center
+                    transition-all duration-300 hover:scale-110 shadow-lg
+                    animate-fadeIn`}
+                    onClick={() => setSelectedGuest(guest)}
+                  >
+                    <Star size={24} className="text-white" />
+                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
+                      <div className="text-xs font-bold truncate">{guest.name}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+          {/* 嘉宾信息卡片 */}
+          {selectedGuest && (
+            <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white z-[100]">
+              <CardContent className="p-6">
+                <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
+                <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {selectedGuest.episodes.map((episode, index) => (
+                    <div 
+                      key={index} 
+                      className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedVideo(episode);
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Video className="w-5 h-5 text-gray-400" />
+                        <span className="flex-1 line-clamp-2">{episode.title}</span>
+                      </div>
+                      <div className="text-sm text-gray-400 mt-2">
+                        {episode.views.toLocaleString()} 次观看
+                      </div>
+                    </div>
+                  ))}
+                  <div className="mt-4 pt-4 border-t border-gray-700">
+                    <div className="text-sm text-gray-300">
+                      总观看: {selectedGuest.totalViews.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* 视频播放弹窗 */}
+          <VideoDialog video={selectedVideo} />
+        </div>
+      </div>
     </div>
   );
 };
