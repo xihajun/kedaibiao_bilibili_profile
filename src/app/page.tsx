@@ -1,6 +1,17 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
+import {
+  Sun,
+  User,
+  Video,
+  Star,
+  Briefcase,
+  Code,
+  Brain,
+  Heart,
+  Coffee,
+  X
+} from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
@@ -16,11 +27,15 @@ const KnowledgeUniverse = () => {
   const [scale, setScale] = useState(1);
 
   const canvasRef = useRef(null);
-  const cardRef = useRef(null);
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (cardRef.current && !cardRef.current.contains(event.target)) {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        !event.target.closest('.interactive')
+      ) {
         setSelectedGuest(null);
       }
     };
@@ -119,6 +134,7 @@ const KnowledgeUniverse = () => {
     },
   };
 
+  
   // Main guests data
   const allGuests = [
   {
@@ -2742,47 +2758,53 @@ const KnowledgeUniverse = () => {
               );
             })}
 
-          {/* 嘉宾信息模态窗口 */}
-          {selectedGuest && (
-            <Dialog open={!!selectedGuest} onOpenChange={() => setSelectedGuest(null)}>
-              <DialogContent className="sm:max-w-lg">
-                <div className="p-6">
-                  <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
-                  <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {selectedGuest.episodes.map((episode, index) => (
-                      <div 
-                        key={index} 
-                        className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedVideo(episode);
-                        }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <Video className="w-5 h-5 text-gray-400" />
-                          <span className="flex-1 line-clamp-2">{episode.title}</span>
-                        </div>
-                        <div className="text-sm text-gray-400 mt-2">
-                          {episode.views.toLocaleString()} 次观看
-                        </div>
-                      </div>
-                    ))}
-                    <div className="mt-4 pt-4 border-t border-gray-700">
-                      <div className="text-sm text-gray-300">
-                        总观看: {selectedGuest.totalViews.toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
-
-          {/* 视频播放弹窗 */}
-          <VideoDialog video={selectedVideo} />
         </div>
       </div>
+
+      {/* 嘉宾信息侧边栏 */}
+      {selectedGuest && (
+        <div
+          ref={sidebarRef}
+          className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-90 text-white w-96 max-w-full h-auto p-6 shadow-lg z-50 overflow-y-auto"
+        >
+          <button
+            className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            onClick={() => setSelectedGuest(null)}
+          >
+            <X size={24} />
+          </button>
+          <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
+          <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
+          <div className="space-y-3">
+            {selectedGuest.episodes.map((episode, index) => (
+              <div 
+                key={index} 
+                className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedVideo(episode);
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <Video className="w-5 h-5 text-gray-400" />
+                  <span className="flex-1 line-clamp-2">{episode.title}</span>
+                </div>
+                <div className="text-sm text-gray-400 mt-2">
+                  {episode.views.toLocaleString()} 次观看
+                </div>
+              </div>
+            ))}
+            <div className="mt-4 pt-4 border-t border-gray-700">
+              <div className="text-sm text-gray-300">
+                总观看: {selectedGuest.totalViews.toLocaleString()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 视频播放弹窗 */}
+      <VideoDialog video={selectedVideo} />
     </div>
   );
 };
