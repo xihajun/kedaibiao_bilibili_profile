@@ -12,8 +12,7 @@ import {
   Coffee,
   X
 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog"; // 确保 Dialog 组件正确导入
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
@@ -2568,6 +2567,7 @@ const KnowledgeUniverse = () => {
     "totalViews": 279262
   }
 ];
+
   // 按总观看量排序并筛选主要嘉宾（前20名）
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
@@ -2584,6 +2584,16 @@ const KnowledgeUniverse = () => {
   // 中心点
   const center = canvasSize / 2;
 
+  // 辅助函数：生成哔哩哔哩嵌入播放器 URL
+  const getBilibiliEmbedURL = (url) => {
+    const regex = /bilibili\.com\/video\/(BV\w+)/;
+    const match = url.match(regex);
+    if (match && match[1]) {
+      return `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0`;
+    }
+    return url; // 如果无法匹配，返回原始 URL
+  };
+
   // 计算轨道位置，使用像素为单位
   const calculateOrbitPosition = (index, total, radius, offset = 0) => {
     const angle = (index * 2 * Math.PI) / total + offset;
@@ -2593,18 +2603,28 @@ const KnowledgeUniverse = () => {
     };
   };
 
-  const VideoDialog = ({ video }) => {
+  // 视频弹窗组件
+  const VideoDialog = ({ video, onClose }) => {
     if (!video?.url) return null;
 
+    const embedURL = getBilibiliEmbedURL(video.url);
+
     return (
-      <Dialog open={!!video} onOpenChange={() => setSelectedVideo(null)}>
-        <DialogContent className="sm:max-w-[80vw]">
+      <Dialog open={!!video} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[80vw] relative">
+          {/* 关闭按钮 */}
+          <button
+            className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            onClick={onClose}
+          >
+            <X size={24} />
+          </button>
           <div className="p-4">
             <h2 className="text-xl font-bold mb-4">{video.title}</h2>
             <div className="aspect-video">
               <iframe
                 className="w-full h-full"
-                src={video.url}
+                src={embedURL}
                 title={video.title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -2654,7 +2674,7 @@ const KnowledgeUniverse = () => {
               <Sun size={48} className="text-yellow-100" />
             </div>
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
-              <div className="text-base text-yellow-300 font-bold">课代表</div>
+              <div className="text-xl text-yellow-300 font-bold">课代表</div>
             </div>
           </div>
 
@@ -2767,6 +2787,7 @@ const KnowledgeUniverse = () => {
           ref={sidebarRef}
           className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-90 text-white w-96 max-w-full h-auto p-6 shadow-lg z-50 overflow-y-auto"
         >
+          {/* 关闭按钮 */}
           <button
             className="absolute top-4 right-4 text-gray-400 hover:text-white"
             onClick={() => setSelectedGuest(null)}
@@ -2804,7 +2825,7 @@ const KnowledgeUniverse = () => {
       )}
 
       {/* 视频播放弹窗 */}
-      <VideoDialog video={selectedVideo} />
+      <VideoDialog video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
 };
