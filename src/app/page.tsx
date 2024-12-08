@@ -2611,7 +2611,7 @@ const KnowledgeUniverse = () => {
 
     return (
       <Dialog open={!!video} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[80vw] relative">
+        <DialogContent className="sm:max-w-[80vw] relative flex flex-col items-center justify-center">
           {/* 关闭按钮 */}
           <button
             className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -2619,8 +2619,8 @@ const KnowledgeUniverse = () => {
           >
             <X size={24} />
           </button>
-          <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">{video.title}</h2>
+          <div className="p-4 w-full">
+            <h2 className="text-xl font-bold mb-4 text-center">{video.title}</h2>
             <div className="aspect-video">
               <iframe
                 className="w-full h-full"
@@ -2674,7 +2674,7 @@ const KnowledgeUniverse = () => {
               <Sun size={48} className="text-yellow-100" />
             </div>
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
-              <div className="text-xl text-yellow-300 font-bold">课代表</div>
+              <div className="text-base text-yellow-300 font-bold">课代表</div>
             </div>
           </div>
 
@@ -2777,7 +2777,6 @@ const KnowledgeUniverse = () => {
                 </div>
               );
             })}
-
         </div>
       </div>
 
