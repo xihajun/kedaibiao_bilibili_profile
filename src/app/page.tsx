@@ -2654,7 +2654,7 @@ const KnowledgeUniverse = () => {
               <Sun size={48} className="text-yellow-100" />
             </div>
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
-              <div className="text-xl text-yellow-300 font-bold">课代表</div>
+              <div className="text-base text-yellow-300 font-bold">课代表</div>
             </div>
           </div>
 
