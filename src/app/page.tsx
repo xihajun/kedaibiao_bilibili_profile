@@ -2601,7 +2601,7 @@ const KnowledgeUniverse = () => {
           );
           return (
             <div
-              key={guest.id}
+              key={`${guest.id}-${index}`}
               className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500"
               style={position}
             >
@@ -2635,7 +2635,7 @@ const KnowledgeUniverse = () => {
           );
           return (
             <div
-              key={guest.id}
+              key={`${guest.id}-${index}`}
               className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500"
               style={position}
             >
