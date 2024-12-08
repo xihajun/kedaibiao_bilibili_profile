@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -2574,7 +2573,10 @@ const KnowledgeUniverse = () => {
               className={`p-4 rounded-full cursor-pointer bg-gradient-to-r ${category.color}
               transition-all duration-300 hover:scale-110 shadow-lg
               ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
-              onClick={() => setSelectedCategory(isSelected ? null : key)}
+              onClick={() => {
+                setSelectedCategory(isSelected ? null : key);
+                setSelectedGuest(null); // Reset selected guest when changing category
+              }}
             >
               <CategoryIcon size={28} className="text-white" />
             </div>
@@ -2691,3 +2693,4 @@ const KnowledgeUniverse = () => {
 };
 
 export default KnowledgeUniverse;
+
