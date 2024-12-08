@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, User, Video, Star, Briefcase, Code, Brain, Heart, Coffee } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
@@ -2552,7 +2552,6 @@ const KnowledgeUniverse = () => {
     "totalViews": 279262
   }
 ];
-
   // 按总观看量排序并筛选主要嘉宾（前20名）
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
@@ -2563,8 +2562,8 @@ const KnowledgeUniverse = () => {
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(20);
 
-  // 虚拟画布的大小
-  const canvasSize = 2000; // 2000px x 2000px
+  // 虚拟画布的大小（缩小为1000px x 1000px）
+  const canvasSize = 1000; // 1000px x 1000px
 
   // 中心点
   const center = canvasSize / 2;
@@ -2653,7 +2652,7 @@ const KnowledgeUniverse = () => {
               <div
                 key={key}
                 className={`absolute -translate-x-1/2 -translate-y-1/2 z-40 
-                transition-all duration-300`}
+                transition-all duration-300 interactive`}
                 style={position}
               >
                 <div 
@@ -2743,39 +2742,41 @@ const KnowledgeUniverse = () => {
               );
             })}
 
-          {/* 嘉宾信息卡片 */}
+          {/* 嘉宾信息模态窗口 */}
           {selectedGuest && (
-            <Card ref={cardRef} className="absolute bottom-4 right-4 w-96 bg-gray-800 bg-opacity-80 text-white z-[100]">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
-                <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
-                <div className="space-y-3 max-h-96 overflow-y-auto">
-                  {selectedGuest.episodes.map((episode, index) => (
-                    <div 
-                      key={index} 
-                      className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedVideo(episode);
-                      }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Video className="w-5 h-5 text-gray-400" />
-                        <span className="flex-1 line-clamp-2">{episode.title}</span>
+            <Dialog open={!!selectedGuest} onOpenChange={() => setSelectedGuest(null)}>
+              <DialogContent className="sm:max-w-lg">
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
+                  <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {selectedGuest.episodes.map((episode, index) => (
+                      <div 
+                        key={index} 
+                        className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedVideo(episode);
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Video className="w-5 h-5 text-gray-400" />
+                          <span className="flex-1 line-clamp-2">{episode.title}</span>
+                        </div>
+                        <div className="text-sm text-gray-400 mt-2">
+                          {episode.views.toLocaleString()} 次观看
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-400 mt-2">
-                        {episode.views.toLocaleString()} 次观看
+                    ))}
+                    <div className="mt-4 pt-4 border-t border-gray-700">
+                      <div className="text-sm text-gray-300">
+                        总观看: {selectedGuest.totalViews.toLocaleString()}
                       </div>
-                    </div>
-                  ))}
-                  <div className="mt-4 pt-4 border-t border-gray-700">
-                    <div className="text-sm text-gray-300">
-                      总观看: {selectedGuest.totalViews.toLocaleString()}
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </DialogContent>
+            </Dialog>
           )}
 
           {/* 视频播放弹窗 */}
