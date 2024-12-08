@@ -12,7 +12,7 @@ import {
   Coffee,
   X
 } from 'lucide-react';
-import { Dialog, DialogContent } from "@/components/ui/dialog"; // 确保 Dialog 组件正确导入
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
@@ -47,7 +47,6 @@ const KnowledgeUniverse = () => {
 
   // 拖拽事件处理
   const handleMouseDown = (e) => {
-    // 仅在点击非交互元素时触发拖拽
     if (e.target.closest('.interactive')) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - translate.x, y: e.clientY - translate.y });
@@ -84,8 +83,8 @@ const KnowledgeUniverse = () => {
   // 缩放事件处理
   const handleWheel = (e) => {
     e.preventDefault();
-    const delta = -e.deltaY / 500; // 调整缩放速度
-    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2)); // 限制缩放范围
+    const delta = -e.deltaY / 500;
+    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2));
   };
 
   const categories = {
@@ -133,7 +132,6 @@ const KnowledgeUniverse = () => {
     },
   };
 
-  
   // Main guests data
   const allGuests = [
   {
@@ -2568,33 +2566,26 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-  // 按总观看量排序并筛选主要嘉宾（前20名）
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(0, 20);
 
-  // 其余嘉宾作为访谈嘉宾
   const guestStars = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
     .slice(20);
 
-  // 虚拟画布的大小（缩小为1000px x 1000px）
-  const canvasSize = 1000; // 1000px x 1000px
-
-  // 中心点
+  const canvasSize = 1000;
   const center = canvasSize / 2;
 
-  // 辅助函数：生成哔哩哔哩嵌入播放器 URL
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
     const match = url.match(regex);
     if (match && match[1]) {
       return `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0`;
     }
-    return url; // 如果无法匹配，返回原始 URL
+    return url;
   };
 
-  // 计算轨道位置，使用像素为单位
   const calculateOrbitPosition = (index, total, radius, offset = 0) => {
     const angle = (index * 2 * Math.PI) / total + offset;
     return {
@@ -2603,7 +2594,6 @@ const KnowledgeUniverse = () => {
     };
   };
 
-  // 视频弹窗组件
   const VideoDialog = ({ video, onClose }) => {
     if (!video?.url) return null;
 
@@ -2611,17 +2601,18 @@ const KnowledgeUniverse = () => {
 
     return (
       <Dialog open={!!video} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[80vw] relative flex flex-col items-center justify-center">
-          {/* 关闭按钮 */}
-          <button
-            className="absolute top-4 right-4 text-gray-400 hover:text-white"
-            onClick={onClose}
-          >
-            <X size={24} />
-          </button>
-          <div className="p-4 w-full">
-            <h2 className="text-xl font-bold mb-4 text-center">{video.title}</h2>
-            <div className="aspect-video">
+        <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-gray-900">
+          <div className="w-full h-full p-8 flex flex-col">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-white">{video.title}</h2>
+              <button
+                className="text-gray-400 hover:text-white transition-colors"
+                onClick={onClose}
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="flex-1 w-full">
               <iframe
                 className="w-full h-full"
                 src={embedURL}
@@ -2646,14 +2637,7 @@ const KnowledgeUniverse = () => {
         cursor: isDragging ? 'grabbing' : 'grab'
       }}
     >
-      {/* 视口 */}
-      <div
-        className="absolute top-0 left-0 w-full h-full"
-        style={{
-          overflow: 'hidden'
-        }}
-      >
-        {/* 虚拟画布 */}
+      <div className="absolute top-0 left-0 w-full h-full">
         <div
           ref={canvasRef}
           className="relative"
@@ -2665,7 +2649,7 @@ const KnowledgeUniverse = () => {
             transition: isDragging ? 'none' : 'transform 0.1s ease-out'
           }}
         >
-          {/* 中心太阳（课代表） */}
+          {/* Center Sun */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
             style={{ width: '100px', height: '100px' }}
@@ -2678,17 +2662,16 @@ const KnowledgeUniverse = () => {
             </div>
           </div>
 
-          {/* 分类指示器 */}
+          {/* Categories */}
           {Object.entries(categories).map(([key, category], index) => {
             const CategoryIcon = category.icon;
-            const radius = 150; // 分类轨道半径
+            const radius = 150;
             const position = calculateOrbitPosition(index, Object.keys(categories).length, radius);
             const isSelected = selectedCategory === key;
             return (
               <div
                 key={key}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 z-40 
-                transition-all duration-300 interactive`}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-40 transition-all duration-300 interactive"
                 style={position}
               >
                 <div 
@@ -2697,7 +2680,7 @@ const KnowledgeUniverse = () => {
                   ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
                   onClick={() => {
                     setSelectedCategory(isSelected ? null : key);
-                    setSelectedGuest(null); // Reset selected guest when changing category
+                    setSelectedGuest(null);
                   }}
                 >
                   <CategoryIcon size={28} className="text-white" />
@@ -2709,11 +2692,11 @@ const KnowledgeUniverse = () => {
             );
           })}
 
-          {/* 主要嘉宾轨道 */}
+          {/* Main Guests */}
           {selectedCategory && mainGuests
             .filter(guest => guest.category === selectedCategory)
             .map((guest, index, filteredArray) => {
-              const radius = 250; // 主要嘉宾轨道半径
+              const radius = 250;
               const position = calculateOrbitPosition(
                 index, 
                 filteredArray.length, 
@@ -2744,11 +2727,11 @@ const KnowledgeUniverse = () => {
               );
             })}
 
-          {/* 访谈嘉宾轨道 */}
+          {/* Guest Stars */}
           {selectedCategory && guestStars
             .filter(guest => guest.category === selectedCategory)
             .map((guest, index, filteredArray) => {
-              const radius = 350; // 访谈嘉宾轨道半径
+              const radius = 350;
               const position = calculateOrbitPosition(
                 index,
                 filteredArray.length,
@@ -2780,15 +2763,14 @@ const KnowledgeUniverse = () => {
         </div>
       </div>
 
-      {/* 嘉宾信息侧边栏 */}
+      {/* Guest Info Sidebar */}
       {selectedGuest && (
         <div
           ref={sidebarRef}
           className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-90 text-white w-96 max-w-full h-auto p-6 shadow-lg z-50 overflow-y-auto"
         >
-          {/* 关闭按钮 */}
           <button
-            className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
             onClick={() => setSelectedGuest(null)}
           >
             <X size={24} />
@@ -2823,7 +2805,7 @@ const KnowledgeUniverse = () => {
         </div>
       )}
 
-      {/* 视频播放弹窗 */}
+      {/* Video Dialog */}
       <VideoDialog video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
