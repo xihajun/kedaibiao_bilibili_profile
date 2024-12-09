@@ -1,31 +1,13 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import {
-  Sun,
-  User,
-  Video,
-  Star,
-  Briefcase,
-  Code,
-  Brain,
-  Heart,
-  Coffee,
-  X
-} from 'lucide-react';
+import { Video, X, Search } from 'lucide-react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // 拖拽和缩放状态
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [translate, setTranslate] = useState({ x: 0, y: 0 });
-  const [scale, setScale] = useState(1);
-
-  const canvasRef = useRef(null);
   const sidebarRef = useRef(null);
 
   useEffect(() => {
@@ -44,93 +26,6 @@ const KnowledgeUniverse = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  // 拖拽事件处理
-  const handleMouseDown = (e) => {
-    if (e.target.closest('.interactive')) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - translate.x, y: e.clientY - translate.y });
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      setTranslate({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging, dragStart]);
-
-  // 缩放事件处理
-  const handleWheel = (e) => {
-    e.preventDefault();
-    const delta = -e.deltaY / 500;
-    setScale(prev => Math.min(Math.max(prev + delta, 0.5), 2));
-  };
-
-  const categories = {
-    consulting_career: {
-      name: "咨询职业",
-      color: "from-blue-400 to-blue-600",
-      iconColor: "text-blue-400",
-      icon: Briefcase,
-    },
-    entrepreneurship: {
-      name: "创业",
-      color: "from-green-400 to-green-600",
-      iconColor: "text-green-400",
-      icon: Star,
-    },
-    job_search: {
-      name: "求职",
-      color: "from-purple-400 to-purple-600",
-      iconColor: "text-purple-400",
-      icon: User,
-    },
-    leadership: {
-      name: "领导力",
-      color: "from-yellow-400 to-yellow-600",
-      iconColor: "text-yellow-400",
-      icon: Brain,
-    },
-    technical_career: {
-      name: "技术职业",
-      color: "from-blue-400 to-blue-600",
-      iconColor: "text-blue-400",
-      icon: Code,
-    },
-    work_life: {
-      name: "工作与生活平衡",
-      color: "from-red-400 to-red-600",
-      iconColor: "text-red-400",
-      icon: Heart,
-    },
-    workplace: {
-      name: "职场",
-      color: "from-green-400 to-green-600",
-      iconColor: "text-green-400",
-      icon: Coffee,
-    },
-  };
 
   // Main guests data
   const allGuests = [
@@ -2565,18 +2460,15 @@ const KnowledgeUniverse = () => {
     "totalViews": 279262
   }
 ];
+
   
+  const sortedGuests = [...allGuests].sort((a, b) => b.totalViews - a.totalViews);
 
-  const mainGuests = [...allGuests]
-    .sort((a, b) => b.totalViews - a.totalViews)
-    .slice(0, 20);
-
-  const guestStars = [...allGuests]
-    .sort((a, b) => b.totalViews - a.totalViews)
-    .slice(20);
-
-  const canvasSize = 1000;
-  const center = canvasSize / 2;
+  const filteredGuests = sortedGuests.filter((guest) => {
+    const lowerSearch = searchTerm.toLowerCase();
+    return guest.name.toLowerCase().includes(lowerSearch) || 
+           (guest.role && guest.role.toLowerCase().includes(lowerSearch));
+  });
 
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
@@ -2585,14 +2477,6 @@ const KnowledgeUniverse = () => {
       return `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0`;
     }
     return url;
-  };
-
-  const calculateOrbitPosition = (index, total, radius, offset = 0) => {
-    const angle = (index * 2 * Math.PI) / total + offset;
-    return {
-      left: `${center + radius * Math.cos(angle)}px`,
-      top: `${center + radius * Math.sin(angle)}px`
-    };
   };
 
   const VideoDialog = ({ video, onClose }) => {
@@ -2629,150 +2513,49 @@ const KnowledgeUniverse = () => {
     );
   };
 
-  // 根据当前选中的Category进行过滤
-  const filteredMainGuests = selectedCategory
-    ? mainGuests.filter(guest => guest.category === selectedCategory)
-    : [];
-  const filteredGuestStars = selectedCategory
-    ? guestStars.filter(guest => guest.category === selectedCategory)
-    : [];
-
   return (
-    <div
-      className="relative w-full h-screen bg-gray-900 text-white overflow-hidden"
-      onMouseDown={handleMouseDown}
-      onWheel={handleWheel}
-      style={{
-        cursor: isDragging ? 'grabbing' : 'grab'
-      }}
-    >
-      <div className="absolute top-0 left-0 w-full h-full">
-        <div
-          ref={canvasRef}
-          className="relative"
-          style={{
-            width: `${canvasSize}px`,
-            height: `${canvasSize}px`,
-            transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
-            transformOrigin: 'center center',
-            transition: isDragging ? 'none' : 'transform 0.1s ease-out'
-          }}
-        >
-          {/* Center Sun */}
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
-            style={{ width: '100px', height: '100px' }}
-          >
-            <div className="w-full h-full rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 animate-pulse flex items-center justify-center shadow-lg shadow-yellow-500/50">
-              <Sun size={48} className="text-yellow-100" />
-            </div>
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
-              <div className="text-base text-yellow-300 font-bold">课代表</div>
-            </div>
-          </div>
-
-          {/* Categories */}
-          {Object.entries(categories).map(([key, category], index) => {
-            const CategoryIcon = category.icon;
-            const radius = 150;
-            const position = calculateOrbitPosition(index, Object.keys(categories).length, radius);
-            const isSelected = selectedCategory === key;
-            return (
-              <div
-                key={key}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-40 transition-all duration-300 interactive"
-                style={position}
-              >
-                <div 
-                  className={`p-4 rounded-full cursor-pointer bg-gradient-to-r ${category.color}
-                  transition-all duration-300 hover:scale-110 shadow-lg
-                  ${isSelected ? 'ring-4 ring-white ring-opacity-50' : 'opacity-60'}`}
-                  onClick={() => {
-                    setSelectedCategory(isSelected ? null : key);
-                    setSelectedGuest(null);
-                  }}
-                >
-                  <CategoryIcon size={28} className="text-white" />
-                </div>
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
-                  <div className="text-sm font-bold">{category.name}</div>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Main Guests */}
-          {filteredMainGuests.map((guest, index, filteredArray) => {
-            const radius = 250;
-            const position = calculateOrbitPosition(
-              index, 
-              filteredArray.length, 
-              radius,
-              Math.PI / 4
-            );
-            return (
-              <div
-                key={guest.id}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 interactive"
-                style={position}
-              >
-                <div 
-                  className={`w-24 h-24 rounded-full cursor-pointer
-                  bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                  flex items-center justify-center
-                  transition-all duration-300 hover:scale-110 shadow-lg
-                  animate-fadeIn`}
-                  onClick={() => setSelectedGuest(guest)}
-                >
-                  <User size={36} className="text-white" />
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center w-32">
-                    <div className="text-sm font-bold truncate">{guest.name}</div>
-                    <div className="text-xs text-gray-300 truncate">{guest.role?.split(',')[0]}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Guest Stars */}
-          {filteredGuestStars.map((guest, index, filteredArray) => {
-            const radius = 350;
-            const position = calculateOrbitPosition(
-              index,
-              filteredArray.length,
-              radius,
-              Math.PI / 3
-            );
-            return (
-              <div
-                key={guest.id}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 interactive"
-                style={position}
-              >
-                <div 
-                  className={`w-16 h-16 rounded-full cursor-pointer
-                  bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                  flex items-center justify-center
-                  transition-all duration-300 hover:scale-110 shadow-lg
-                  animate-fadeIn`}
-                  onClick={() => setSelectedGuest(guest)}
-                >
-                  <Star size={24} className="text-white" />
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
-                    <div className="text-xs font-bold truncate">{guest.name}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <div className="relative w-full h-screen bg-gray-900 text-white flex flex-col">
+      {/* 顶部搜索栏 */}
+      <div className="w-full p-4 bg-gray-800 flex items-center gap-2">
+        <Search className="text-gray-300" />
+        <input 
+          type="text"
+          placeholder="搜索嘉宾名称或角色..."
+          className="bg-gray-700 text-white rounded p-2 flex-1 focus:outline-none"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
-      {/* Guest Info Sidebar */}
+      {/* 嘉宾列表区域 */}
+      <div className="flex-1 overflow-auto p-4">
+        {filteredGuests.length === 0 && (
+          <div className="text-gray-400 text-center mt-10">暂无匹配的嘉宾</div>
+        )}
+        <ul className="space-y-4">
+          {filteredGuests.map((guest) => (
+            <li 
+              key={guest.id} 
+              className="flex items-center justify-between bg-gray-800 hover:bg-gray-700 transition-colors p-4 rounded cursor-pointer interactive"
+              onClick={() => setSelectedGuest(guest)}
+            >
+              <div>
+                <div className="font-bold text-lg">{guest.name}</div>
+                <div className="text-sm text-gray-300">{guest.role}</div>
+              </div>
+              <div className="text-sm text-gray-400">
+                总观看 {guest.totalViews.toLocaleString()}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 选定嘉宾的侧边栏 */}
       {selectedGuest && (
         <div
           ref={sidebarRef}
-          className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-90 text-white w-96 max-w-full h-auto p-6 shadow-lg z-50 overflow-y-auto"
+          className="fixed right-0 top-0 bottom-0 bg-gray-800 bg-opacity-95 text-white w-96 max-w-full p-6 shadow-lg z-50 overflow-y-auto"
         >
           <button
             className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -2810,7 +2593,7 @@ const KnowledgeUniverse = () => {
         </div>
       )}
 
-      {/* Video Dialog */}
+      {/* 视频弹窗 */}
       <VideoDialog video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
