@@ -1,32 +1,19 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
-import { Video, X, Search } from 'lucide-react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+import React, { useState, useEffect } from 'react';
+import { Search, Video, X, ExternalLink } from 'lucide-react';
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const sidebarRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target) &&
-        !event.target.closest('.interactive')
-      ) {
-        setSelectedGuest(null);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
 
   // Main guests data
   const allGuests = [
@@ -34,7 +21,7 @@ const KnowledgeUniverse = () => {
     "name": "Angelina Yang",
     "role": "硅谷中场数据负责人",
     "category": "['leadership', 'leadership']",
-    "id": "[1, 1]",
+    "id": 1,
     "episodes": [
       {
         "platform": "bilibili",
@@ -57,7 +44,7 @@ const KnowledgeUniverse = () => {
     "name": "Bailu Xu",
     "role": "BCG咨询顾问",
     "category": "['consulting_career']",
-    "id": "[1]",
+    "id": 2,
     "episodes": [
       {
         "platform": "bilibili",
@@ -73,7 +60,7 @@ const KnowledgeUniverse = () => {
     "name": "Ben and David",
     "role": "Hosts of Acquired Podcast",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 3,
     "episodes": [
       {
         "platform": "bilibili",
@@ -89,7 +76,7 @@ const KnowledgeUniverse = () => {
     "name": "Charles",
     "role": "Software Development Manager at Amazon",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 4,
     "episodes": [
       {
         "platform": "bilibili",
@@ -105,7 +92,7 @@ const KnowledgeUniverse = () => {
     "name": "Cooper Lu",
     "role": "AI Scientist at Meta/Amazon",
     "category": "['technical_career', 'technical_career', 'technical_career', 'entrepreneurship']",
-    "id": "[1, '1', 1, '1']",
+    "id": 5,
     "episodes": [
       {
         "platform": "bilibili",
@@ -142,7 +129,7 @@ const KnowledgeUniverse = () => {
     "name": "Daliana Liu",
     "role": "Senior Data Scientist, Entrepreneur",
     "category": "['entrepreneurship']",
-    "id": "['1']",
+    "id": 6,
     "episodes": [
       {
         "platform": "bilibili",
@@ -158,7 +145,7 @@ const KnowledgeUniverse = () => {
     "name": "David Sun",
     "role": "Founding Engineer",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 7,
     "episodes": [
       {
         "platform": "bilibili",
@@ -174,7 +161,7 @@ const KnowledgeUniverse = () => {
     "name": "Deb Liu",
     "role": "CEO of Ancestry, Former VP at Meta",
     "category": "['leadership']",
-    "id": "['1']",
+    "id": 8,
     "episodes": [
       {
         "platform": "bilibili",
@@ -190,7 +177,7 @@ const KnowledgeUniverse = () => {
     "name": "Emily",
     "role": "00后耶鲁MBA",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 9,
     "episodes": [
       {
         "platform": "bilibili",
@@ -213,7 +200,7 @@ const KnowledgeUniverse = () => {
     "name": "Ethan Evans",
     "role": "Former Amazon VP, Executive Coach",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 10,
     "episodes": [
       {
         "platform": "bilibili",
@@ -257,7 +244,7 @@ const KnowledgeUniverse = () => {
     "name": "Ethan Zhu",
     "role": "Analytics Manager at DoorDash",
     "category": "['work_life', 'technical_career']",
-    "id": "[1, 1]",
+    "id": 11,
     "episodes": [
       {
         "platform": "bilibili",
@@ -329,7 +316,7 @@ const KnowledgeUniverse = () => {
     "name": "Eugene Wang",
     "role": "前亚马逊首席产品经理",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 12,
     "episodes": [
       {
         "platform": "bilibili",
@@ -345,7 +332,7 @@ const KnowledgeUniverse = () => {
     "name": "Francer",
     "role": "Tencent Game Operations and Project Management",
     "category": "['job_search']",
-    "id": "[3]",
+    "id": 13,
     "episodes": [
       {
         "platform": "bilibili",
@@ -368,7 +355,7 @@ const KnowledgeUniverse = () => {
     "name": "Howard Li",
     "role": "Meta DS Director",
     "category": "['technical_career', 'leadership', 'leadership', 'leadership']",
-    "id": "[1, 1, 1, 1]",
+    "id": 14,
     "episodes": [
       {
         "platform": "bilibili",
@@ -405,7 +392,7 @@ const KnowledgeUniverse = () => {
     "name": "Howie",
     "role": "硅谷徐老师，Gen Chief AI Officer，投资人，创业者，斯坦福客座教授",
     "category": "['entrepreneurship']",
-    "id": "['1']",
+    "id": 15,
     "episodes": [
       {
         "platform": "bilibili",
@@ -561,7 +548,7 @@ const KnowledgeUniverse = () => {
     "name": "Kathy and Ashley",
     "role": "Software Engineers at Google and Meta",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 16,
     "episodes": [
       {
         "platform": "bilibili",
@@ -577,7 +564,7 @@ const KnowledgeUniverse = () => {
     "name": "Kelly Xu",
     "role": "创业者，网红，前Airbnb数据科学家",
     "category": "['entrepreneurship', 'technical_career', 'technical_career', 'technical_career', 'technical_career', 'technical_career']",
-    "id": "[1, 1, 1, 1, 1, 3]",
+    "id": 17,
     "episodes": [
       {
         "platform": "bilibili",
@@ -628,7 +615,7 @@ const KnowledgeUniverse = () => {
     "name": "Kevin Chen",
     "role": "MIT Professor",
     "category": "['technical_career', 'job_search']",
-    "id": "['1', 1]",
+    "id": 18,
     "episodes": [
       {
         "platform": "bilibili",
@@ -693,7 +680,7 @@ const KnowledgeUniverse = () => {
     "name": "Leon",
     "role": "前Meta E7 Tech Lead, 亚马逊L7, 个人投资者",
     "category": "['entrepreneurship', 'entrepreneurship', 'work_life', 'work_life', 'work_life']",
-    "id": "[1, '1', 1, 1, 1]",
+    "id": 19,
     "episodes": [
       {
         "platform": "bilibili",
@@ -821,7 +808,7 @@ const KnowledgeUniverse = () => {
     "name": "Mike Vernal",
     "role": "Former Meta VP, Sequoia Capital Partner",
     "category": "['leadership']",
-    "id": "['1']",
+    "id": 20,
     "episodes": [
       {
         "platform": "bilibili",
@@ -851,7 +838,7 @@ const KnowledgeUniverse = () => {
     "name": "Mike Vernal",
     "role": "Venture Capitalist, Former VP at Meta",
     "category": "['entrepreneurship']",
-    "id": "['1']",
+    "id": 21,
     "episodes": [
       {
         "platform": "bilibili",
@@ -867,7 +854,7 @@ const KnowledgeUniverse = () => {
     "name": "Nan Zhou",
     "role": "Director at Qualcomm Ventures",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 22,
     "episodes": [
       {
         "platform": "bilibili",
@@ -883,7 +870,7 @@ const KnowledgeUniverse = () => {
     "name": "Nan Zhou",
     "role": "Director at Qualcomm Ventures, Board Observer for Multiple Companies",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 23,
     "episodes": [
       {
         "platform": "bilibili",
@@ -913,7 +900,7 @@ const KnowledgeUniverse = () => {
     "name": "Newton",
     "role": "Microsoft Programmer and Restaurant Owner",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 24,
     "episodes": [
       {
         "platform": "bilibili",
@@ -929,7 +916,7 @@ const KnowledgeUniverse = () => {
     "name": "Newton",
     "role": "微软程序员，餐馆老板",
     "category": "['entrepreneurship', 'entrepreneurship']",
-    "id": "[1, '1']",
+    "id": 25,
     "episodes": [
       {
         "platform": "bilibili",
@@ -952,7 +939,7 @@ const KnowledgeUniverse = () => {
     "name": "OE_Ben",
     "role": "软件工程师",
     "category": "['workplace']",
-    "id": "[1]",
+    "id": 26,
     "episodes": [
       {
         "platform": "bilibili",
@@ -982,7 +969,7 @@ const KnowledgeUniverse = () => {
     "name": "Rachel王然",
     "role": "创始人, 区块链早期玩家, 投资分析师",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 27,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1005,7 +992,7 @@ const KnowledgeUniverse = () => {
     "name": "Reynold Xin",
     "role": "Databricks联合创始人",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 28,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1035,7 +1022,7 @@ const KnowledgeUniverse = () => {
     "name": "Richer徐瑞呈",
     "role": "大观资本合伙人，出海同学会主理人",
     "category": "['entrepreneurship', 'entrepreneurship', 'entrepreneurship']",
-    "id": "[1, 1, 1]",
+    "id": 29,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1065,7 +1052,7 @@ const KnowledgeUniverse = () => {
     "name": "Riley Shu",
     "role": "Data Scientist at Epic Games",
     "category": "['work_life', 'leadership']",
-    "id": "['1', 1]",
+    "id": 30,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1095,7 +1082,7 @@ const KnowledgeUniverse = () => {
     "name": "Rod谭",
     "role": "中国直播玩法创始人，前腾讯QQ小世界总监",
     "category": "['entrepreneurship', 'entrepreneurship', 'entrepreneurship']",
-    "id": "[1, 1, 1]",
+    "id": 31,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1125,7 +1112,7 @@ const KnowledgeUniverse = () => {
     "name": "SVTC",
     "role": "Data Scientist",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 32,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1148,7 +1135,7 @@ const KnowledgeUniverse = () => {
     "name": "Sam Zhang",
     "role": "字节早期员工, Unity",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 33,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1164,7 +1151,7 @@ const KnowledgeUniverse = () => {
     "name": "Shaojun Zhu",
     "role": "Director Engineer at Stack AV",
     "category": "['technical_career', 'technical_career']",
-    "id": "[1, 1]",
+    "id": 34,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1194,7 +1181,7 @@ const KnowledgeUniverse = () => {
     "name": "Teri 张雅缇",
     "role": "腾讯总监，PPT达人",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 35,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1210,7 +1197,7 @@ const KnowledgeUniverse = () => {
     "name": "Terry Chen",
     "role": "YouTube Influencer, Engineer, Investor",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 36,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1247,7 +1234,7 @@ const KnowledgeUniverse = () => {
     "name": "Tim Chan",
     "role": "Head of Data at Statsig",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 37,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1277,7 +1264,7 @@ const KnowledgeUniverse = () => {
     "name": "Tristan崔老师",
     "role": "IG百万粉网红，自由职业者",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 38,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1293,7 +1280,7 @@ const KnowledgeUniverse = () => {
     "name": "Vijaye Raji",
     "role": "Statsig创始人，前Meta副总裁",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 39,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1337,7 +1324,7 @@ const KnowledgeUniverse = () => {
     "name": "Vivian Wang",
     "role": "前平安副总裁, Palpay中国产品总经理, 连续创业者",
     "category": "['entrepreneurship', 'leadership', 'leadership']",
-    "id": "[1, 1, 1]",
+    "id": 40,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1395,7 +1382,7 @@ const KnowledgeUniverse = () => {
     "name": "Yujie",
     "role": "Staff Engineer, Team Lead at Meta",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 41,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1425,7 +1412,7 @@ const KnowledgeUniverse = () => {
     "name": "Yuyu",
     "role": "前腾讯员工，百万网红",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 42,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1441,7 +1428,7 @@ const KnowledgeUniverse = () => {
     "name": "何冬阳",
     "role": "前国企金融负责人，卡电宝创始人",
     "category": "['entrepreneurship']",
-    "id": "['1']",
+    "id": 43,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1457,7 +1444,7 @@ const KnowledgeUniverse = () => {
     "name": "余超旻",
     "role": "Staff Engineer",
     "category": "['work_life']",
-    "id": "['1']",
+    "id": 44,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1473,7 +1460,7 @@ const KnowledgeUniverse = () => {
     "name": "佳科",
     "role": "Outer创始人",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 45,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1489,7 +1476,7 @@ const KnowledgeUniverse = () => {
     "name": "保罗",
     "role": "前微软产品经理，抖音网红",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 46,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1512,7 +1499,7 @@ const KnowledgeUniverse = () => {
     "name": "俞奕舟",
     "role": "Meta程序员",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 47,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1528,7 +1515,7 @@ const KnowledgeUniverse = () => {
     "name": "俞奕舟",
     "role": "软件工程师",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 48,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1544,7 +1531,7 @@ const KnowledgeUniverse = () => {
     "name": "光芒",
     "role": "腾讯GM，虚环主理人",
     "category": "['leadership', 'job_search', 'job_search']",
-    "id": "[1, '1', 1]",
+    "id": 49,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1574,7 +1561,7 @@ const KnowledgeUniverse = () => {
     "name": "刘友忠",
     "role": "Huma Finance创始人, 前Earning CTO, 谷歌Director, 领航计划创始人, 投资人",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 50,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1625,7 +1612,7 @@ const KnowledgeUniverse = () => {
     "name": "刘律师",
     "role": "硅谷公司法律师",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 51,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1641,7 +1628,7 @@ const KnowledgeUniverse = () => {
     "name": "刘若曦",
     "role": "Investor, Former Product and Engineering at Facebook",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 52,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1657,7 +1644,7 @@ const KnowledgeUniverse = () => {
     "name": "卢易",
     "role": "创业公司 head of AI, 华盛顿大学客座教授, 前苹果AI",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 53,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1680,7 +1667,7 @@ const KnowledgeUniverse = () => {
     "name": "卢毅",
     "role": "Head of AI at a startup, Guest Professor at University of Washington, Former AI Researcher at Apple",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 54,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1696,7 +1683,7 @@ const KnowledgeUniverse = () => {
     "name": "吴晶辰",
     "role": "Amazon算法科学家",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 55,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1712,7 +1699,7 @@ const KnowledgeUniverse = () => {
     "name": "娄洋",
     "role": "光源资本董事总经理",
     "category": "['entrepreneurship', 'entrepreneurship']",
-    "id": "[1, 1]",
+    "id": 56,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1735,7 +1722,7 @@ const KnowledgeUniverse = () => {
     "name": "孫玉珍",
     "role": "Data Scientist",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 57,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1751,7 +1738,7 @@ const KnowledgeUniverse = () => {
     "name": "宋明阳",
     "role": "美图秀秀海外CEO",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 58,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1767,7 +1754,7 @@ const KnowledgeUniverse = () => {
     "name": "尚书",
     "role": "《ToB的本质》作者",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 59,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1783,7 +1770,7 @@ const KnowledgeUniverse = () => {
     "name": "尤拉",
     "role": "小红书网红",
     "category": "['entrepreneurship', 'entrepreneurship']",
-    "id": "[1, 1]",
+    "id": 60,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1806,7 +1793,7 @@ const KnowledgeUniverse = () => {
     "name": "崔老师",
     "role": "IG百万粉网红，自由职业者",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 61,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1822,7 +1809,7 @@ const KnowledgeUniverse = () => {
     "name": "张国琪",
     "role": "腾讯HRBP",
     "category": "['workplace', 'workplace', 'workplace']",
-    "id": "['1', 1, 1]",
+    "id": 62,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1852,7 +1839,7 @@ const KnowledgeUniverse = () => {
     "name": "徐白露",
     "role": "BCG咨询顾问",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 63,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1868,7 +1855,7 @@ const KnowledgeUniverse = () => {
     "name": "戴维",
     "role": "Salesforce Director，前谷歌/微软",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 64,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1884,7 +1871,7 @@ const KnowledgeUniverse = () => {
     "name": "星瞳",
     "role": "国内头部Vlogger",
     "category": "['work_life']",
-    "id": "['1']",
+    "id": 65,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1900,7 +1887,7 @@ const KnowledgeUniverse = () => {
     "name": "李梦颖",
     "role": "天使投资人，前Notion Head of Growth DS，MotherDuck Head of Growth，前Meta/微软",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 66,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1930,7 +1917,7 @@ const KnowledgeUniverse = () => {
     "name": "李正",
     "role": "自媒体创作者",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 67,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1946,7 +1933,7 @@ const KnowledgeUniverse = () => {
     "name": "杨小露",
     "role": "亚马逊Principal PM",
     "category": "['work_life', 'work_life']",
-    "id": "[1, 1]",
+    "id": 68,
     "episodes": [
       {
         "platform": "bilibili",
@@ -1969,7 +1956,7 @@ const KnowledgeUniverse = () => {
     "name": "杨帆",
     "role": "浦思学院创始人",
     "category": "['entrepreneurship', 'entrepreneurship', 'entrepreneurship', 'leadership']",
-    "id": "[1, 2, 1, 1]",
+    "id": 69,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2006,7 +1993,7 @@ const KnowledgeUniverse = () => {
     "name": "柯西",
     "role": "现EM，之前在Meta工作四年",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 70,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2029,7 +2016,7 @@ const KnowledgeUniverse = () => {
     "name": "熊力",
     "role": "Databricks Engineering Manager",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 71,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2066,7 +2053,7 @@ const KnowledgeUniverse = () => {
     "name": "熊力",
     "role": "Databricks Engineering Manager, Former Senior Manager at Microsoft",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 72,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2082,7 +2069,7 @@ const KnowledgeUniverse = () => {
     "name": "王亚雄",
     "role": "Credit Karma",
     "category": "['entrepreneurship', 'workplace']",
-    "id": "[1, 1]",
+    "id": 73,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2105,7 +2092,7 @@ const KnowledgeUniverse = () => {
     "name": "王家侃",
     "role": "Head of Enterprise Engineering",
     "category": "['entrepreneurship']",
-    "id": "['1']",
+    "id": 74,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2142,7 +2129,7 @@ const KnowledgeUniverse = () => {
     "name": "王晨璐",
     "role": "Meta DS，前亚马逊BIE",
     "category": "['job_search', 'job_search']",
-    "id": "[1, 1]",
+    "id": 75,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2165,7 +2152,7 @@ const KnowledgeUniverse = () => {
     "name": "王晨璐",
     "role": "数据科学家",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 76,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2181,7 +2168,7 @@ const KnowledgeUniverse = () => {
     "name": "罗超元",
     "role": "腾讯应届生，管培",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 77,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2197,7 +2184,7 @@ const KnowledgeUniverse = () => {
     "name": "菁菁",
     "role": "微软Principal PM",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 78,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2213,7 +2200,7 @@ const KnowledgeUniverse = () => {
     "name": "董有超",
     "role": "飞书深诺CPO，前字节Pangle GM，爱奇艺资深总监，腾讯总监",
     "category": "['job_search', 'job_search', 'technical_career', 'job_search', 'leadership', 'career_development', 'technical_career', 'leadership']",
-    "id": "[2, 1, 1, 1, 1, 1, 1, 1]",
+    "id": 79,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2320,7 +2307,7 @@ const KnowledgeUniverse = () => {
     "name": "贾扬清",
     "role": "PyTorch创始人之一，前Meta Director，阿里VP，Lepton AI创始人",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 80,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2336,7 +2323,7 @@ const KnowledgeUniverse = () => {
     "name": "赵勇",
     "role": "君子厨房创始人",
     "category": "['entrepreneurship']",
-    "id": "[1]",
+    "id": 81,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2359,7 +2346,7 @@ const KnowledgeUniverse = () => {
     "name": "辛西娅酱",
     "role": "UX Designer, Formerly in Commercial Real Estate",
     "category": "['job_search']",
-    "id": "[1]",
+    "id": 82,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2375,7 +2362,7 @@ const KnowledgeUniverse = () => {
     "name": "边璐",
     "role": "字节Manager，前Meta/亚马逊",
     "category": "['workplace']",
-    "id": "[1]",
+    "id": 83,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2391,7 +2378,7 @@ const KnowledgeUniverse = () => {
     "name": "邹昕",
     "role": "字节DS manager，前Meta/Discover",
     "category": "['leadership']",
-    "id": "[1]",
+    "id": 84,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2421,7 +2408,7 @@ const KnowledgeUniverse = () => {
     "name": "郭浩宇",
     "role": "游戏策划",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 85,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2437,7 +2424,7 @@ const KnowledgeUniverse = () => {
     "name": "金海峰",
     "role": "被谷歌收编的开源博士",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 86,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2460,7 +2447,7 @@ const KnowledgeUniverse = () => {
     "name": "钟远",
     "role": "Head of Data and AI at Rappi, former Senior Manager at Amazon",
     "category": "['technical_career']",
-    "id": "[1]",
+    "id": 87,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2476,7 +2463,7 @@ const KnowledgeUniverse = () => {
     "name": "陈字昕",
     "role": "Stanford Student and Oracle Employee",
     "category": "['work_life']",
-    "id": "[1]",
+    "id": 88,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2499,7 +2486,7 @@ const KnowledgeUniverse = () => {
     "name": "陈湘宇",
     "role": "CEO of 创梦天地",
     "category": "['entrepreneurship', 'entrepreneurship']",
-    "id": "[1, 1]",
+    "id": 89,
     "episodes": [
       {
         "platform": "bilibili",
@@ -2528,7 +2515,6 @@ const KnowledgeUniverse = () => {
     const matchesName = guest.name.toLowerCase().includes(lowerSearch);
     const matchesRole = guest.role && guest.role.toLowerCase().includes(lowerSearch);
     
-    // 新增对 episodes 的判断
     const matchesEpisode = guest.episodes && guest.episodes.some(episode => {
       return episode.title && episode.title.toLowerCase().includes(lowerSearch);
     });
@@ -2552,9 +2538,8 @@ const KnowledgeUniverse = () => {
 
     return (
       <Dialog open={!!video} onOpenChange={onClose}>
-        <DialogContent 
-          className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-black rounded-lg shadow-xl overflow-hidden"
-        >
+        <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-black rounded-lg shadow-xl overflow-hidden">
+          <DialogTitle className="sr-only">{video.title}</DialogTitle>
           <div className="w-full h-full">
             <iframe
               className="w-full h-full"
@@ -2571,87 +2556,114 @@ const KnowledgeUniverse = () => {
   };
 
   return (
-    <div className="relative w-full h-screen bg-gray-900 text-white flex flex-col">
-      {/* 顶部搜索栏 */}
-      <div className="w-full p-4 bg-gray-800 flex items-center gap-2">
-        <Search className="text-gray-300" />
-        <input 
-          type="text"
-          placeholder="搜索嘉宾名称或角色..."
-          className="bg-gray-700 text-white rounded p-2 flex-1 focus:outline-none text-sm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
-      {/* 嘉宾列表区域：多列网格布局 */}
-      <div className="flex-1 overflow-auto p-4">
-        {filteredGuests.length === 0 && (
-          <div className="text-gray-400 text-center mt-10">暂无匹配的嘉宾</div>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredGuests.map((guest) => (
-            <div 
-              key={guest.id} 
-              className="flex flex-col bg-gray-800 hover:bg-gray-700 transition-colors p-2 rounded cursor-pointer interactive"
-              onClick={() => setSelectedGuest(guest)}
-            >
-              <div className="font-bold text-sm truncate">{guest.name}</div>
-              <div className="text-xs text-gray-300 truncate">{guest.role}</div>
-              <div className="text-xs text-gray-400 mt-2">
-                总观看: {guest.totalViews.toLocaleString()}
-              </div>
-            </div>
-          ))}
+    <div className="relative w-full min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-900">Knowledge Universe</h1>
+          <div className="relative w-64">
+            <Input
+              type="text"
+              placeholder="搜索嘉宾或话题..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* 选定嘉宾的侧边栏 */}
+      {/* Main content */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {filteredGuests.length === 0 ? (
+          <div className="text-gray-500 text-center mt-10">暂无匹配的嘉宾</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGuests.map((guest) => (
+              <Card 
+                key={guest.id} 
+                className="hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => setSelectedGuest(guest)}
+              >
+                <CardHeader>
+                  <div className="flex items-center space-x-4">
+                    <Avatar>
+                      <AvatarFallback>{guest.name.slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle>{guest.name}</CardTitle>
+                      <CardDescription>{guest.role}</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between items-center">
+                    <Badge variant="secondary">{guest.episodes.length} 集</Badge>
+                    <span className="text-sm text-gray-500">{guest.totalViews.toLocaleString()} 次观看</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </main>
+
+      {/* Selected guest sidebar */}
       {selectedGuest && (
-        <div
-          ref={sidebarRef}
-          className="fixed right-0 top-0 bottom-0 bg-gray-800 bg-opacity-95 text-white w-96 max-w-full p-6 shadow-lg z-50 overflow-y-auto"
-        >
-          <button
-            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+        <div className="fixed inset-y-0 right-0 w-96 max-w-full bg-white shadow-xl p-6 overflow-hidden flex flex-col">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4"
             onClick={() => setSelectedGuest(null)}
           >
-            <X size={24} />
-          </button>
-          <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
-          <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
-          <div className="space-y-3">
-            {selectedGuest.episodes.map((episode, index) => (
-              <div 
-                key={index} 
-                className="group p-3 rounded hover:bg-gray-700 transition-colors cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedVideo(episode);
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <Video className="w-5 h-5 text-gray-400" />
-                  <span className="flex-1 text-sm">{episode.title}</span>
-                </div>
-                <div className="text-sm text-gray-400 mt-1">
-                  {episode.views.toLocaleString()} 次观看
-                </div>
-              </div>
-            ))}
-            <div className="mt-4 pt-4 border-t border-gray-700">
-              <div className="text-sm text-gray-300">
-                总观看: {selectedGuest.totalViews.toLocaleString()}
-              </div>
+            <X className="h-4 w-4" />
+          </Button>
+          <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
+          <p className="text-gray-500 mb-4">{selectedGuest.role}</p>
+          <ScrollArea className="flex-1 -mx-6 px-6">
+            <div className="space-y-4">
+              {selectedGuest.episodes.map((episode, index) => (
+                <Card 
+                  key={index} 
+                  className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => setSelectedVideo(episode)}
+                >
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center">
+                      <Video className="w-4 h-4 mr-2 text-blue-500" />
+                      {episode.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-between items-center text-sm text-gray-500">
+                      <span>{episode.views.toLocaleString()} 次观看</span>
+                      <Button variant="ghost" size="sm" asChild>
+                        <a href={episode.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                          <ExternalLink className="w-4 h-4 mr-1" />
+                          查看原视频
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </ScrollArea>
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <div className="text-sm text-gray-500">
+              总观看: {selectedGuest.totalViews.toLocaleString()}
             </div>
           </div>
         </div>
       )}
 
-      {/* 视频弹窗 */}
+      {/* Video dialog */}
       <VideoDialog video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     </div>
   );
 };
 
 export default KnowledgeUniverse;
+
