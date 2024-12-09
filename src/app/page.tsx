@@ -2461,7 +2461,7 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-  
+
   const sortedGuests = [...allGuests].sort((a, b) => b.totalViews - a.totalViews);
 
   const filteredGuests = sortedGuests.filter((guest) => {
@@ -2521,34 +2521,32 @@ const KnowledgeUniverse = () => {
         <input 
           type="text"
           placeholder="搜索嘉宾名称或角色..."
-          className="bg-gray-700 text-white rounded p-2 flex-1 focus:outline-none"
+          className="bg-gray-700 text-white rounded p-2 flex-1 focus:outline-none text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      {/* 嘉宾列表区域 */}
+      {/* 嘉宾列表区域：多列网格布局 */}
       <div className="flex-1 overflow-auto p-4">
         {filteredGuests.length === 0 && (
           <div className="text-gray-400 text-center mt-10">暂无匹配的嘉宾</div>
         )}
-        <ul className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredGuests.map((guest) => (
-            <li 
+            <div 
               key={guest.id} 
-              className="flex items-center justify-between bg-gray-800 hover:bg-gray-700 transition-colors p-4 rounded cursor-pointer interactive"
+              className="flex flex-col bg-gray-800 hover:bg-gray-700 transition-colors p-2 rounded cursor-pointer interactive"
               onClick={() => setSelectedGuest(guest)}
             >
-              <div>
-                <div className="font-bold text-lg">{guest.name}</div>
-                <div className="text-sm text-gray-300">{guest.role}</div>
+              <div className="font-bold text-sm truncate">{guest.name}</div>
+              <div className="text-xs text-gray-300 truncate">{guest.role}</div>
+              <div className="text-xs text-gray-400 mt-2">
+                总观看: {guest.totalViews.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-400">
-                总观看 {guest.totalViews.toLocaleString()}
-              </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* 选定嘉宾的侧边栏 */}
@@ -2563,7 +2561,7 @@ const KnowledgeUniverse = () => {
           >
             <X size={24} />
           </button>
-          <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
+          <h2 className="text-xl font-bold mb-2">{selectedGuest.name}</h2>
           <p className="text-sm text-gray-300 mb-4">{selectedGuest.role}</p>
           <div className="space-y-3">
             {selectedGuest.episodes.map((episode, index) => (
@@ -2577,9 +2575,9 @@ const KnowledgeUniverse = () => {
               >
                 <div className="flex items-center gap-3">
                   <Video className="w-5 h-5 text-gray-400" />
-                  <span className="flex-1 line-clamp-2">{episode.title}</span>
+                  <span className="flex-1 text-sm">{episode.title}</span>
                 </div>
-                <div className="text-sm text-gray-400 mt-2">
+                <div className="text-sm text-gray-400 mt-1">
                   {episode.views.toLocaleString()} 次观看
                 </div>
               </div>
