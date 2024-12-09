@@ -2527,7 +2527,7 @@ const KnowledgeUniverse = () => {
       <Dialog open={!!video} onOpenChange={onClose}>
         <DialogContent className="max-w-4xl p-0">
           <DialogTitle className="sr-only">{video.title}</DialogTitle>
-          <div className="w-full aspect-w-16 aspect-h-9">
+          <div className="w-full aspect-video">
             <iframe
               className="w-full h-full"
               src={embedURL}
@@ -2538,6 +2538,7 @@ const KnowledgeUniverse = () => {
             />
           </div>
         </DialogContent>
+
       </Dialog>
     );
   };
