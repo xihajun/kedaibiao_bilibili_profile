@@ -27,6 +27,7 @@ const KnowledgeUniverse = () => {
     };
   }, []);
 
+
   // Main guests data
   const allGuests = [
   {
@@ -2519,7 +2520,6 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-
   const sortedGuests = [...allGuests].sort((a, b) => b.totalViews - a.totalViews);
 
   const filteredGuests = sortedGuests.filter((guest) => {
@@ -2544,27 +2544,18 @@ const KnowledgeUniverse = () => {
 
     return (
       <Dialog open={!!video} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-gray-900">
-          <div className="w-full h-full p-8 flex flex-col">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">{video.title}</h2>
-              <button
-                className="text-gray-400 hover:text-white transition-colors"
-                onClick={onClose}
-              >
-                <X size={24} />
-              </button>
-            </div>
-            <div className="flex-1 w-full">
-              <iframe
-                className="w-full h-full"
-                src={embedURL}
-                title={video.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+        <DialogContent 
+          className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-black rounded-lg shadow-xl overflow-hidden"
+        >
+          <div className="w-full h-full">
+            <iframe
+              className="w-full h-full"
+              src={embedURL}
+              title={video.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
         </DialogContent>
       </Dialog>
