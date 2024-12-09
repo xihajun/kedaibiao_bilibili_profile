@@ -6,7 +6,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -2560,7 +2559,7 @@ const KnowledgeUniverse = () => {
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Knowledge Universe</h1>
+          <h1 className="text-2xl font-bold text-gray-900">课代表的嘉宾们</h1>
           <div className="relative w-64">
             <Input
               type="text"
@@ -2588,9 +2587,9 @@ const KnowledgeUniverse = () => {
               >
                 <CardHeader>
                   <div className="flex items-center space-x-4">
-                    <Avatar>
-                      <AvatarFallback>{guest.name.slice(0, 2)}</AvatarFallback>
-                    </Avatar>
+                    <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+                      {guest.name.slice(0, 2)}
+                    </div>
                     <div>
                       <CardTitle>{guest.name}</CardTitle>
                       <CardDescription>{guest.role}</CardDescription>
