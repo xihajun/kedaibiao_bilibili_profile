@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import { Search, Video, X, ExternalLink } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -2543,21 +2542,21 @@ const KnowledgeUniverse = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-50">
+    <div className="w-full min-h-screen bg-slate-900">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-6xl mx-auto py-4 px-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">课代表的嘉宾们</h1>
+            <h1 className="text-2xl font-bold text-white">课代表的嘉宾们</h1>
             <div className="relative w-64">
               <Input
                 type="text"
                 placeholder="搜索嘉宾或话题..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-slate-700 border-slate-600 text-white placeholder-slate-400"
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             </div>
           </div>
         </div>
@@ -2566,7 +2565,7 @@ const KnowledgeUniverse = () => {
       {/* Main content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
         {filteredGuests.length === 0 ? (
-          <Alert>
+          <Alert className="bg-slate-800 border-slate-700 text-white">
             <AlertTitle>没有找到结果</AlertTitle>
             <AlertDescription>
               暂无匹配的嘉宾，请尝试其他搜索词
@@ -2577,24 +2576,28 @@ const KnowledgeUniverse = () => {
             {filteredGuests.map((guest) => (
               <Card 
                 key={guest.id} 
-                className="hover:shadow-lg transition-shadow cursor-pointer"
+                className="bg-slate-800 border-slate-700 hover:bg-slate-700 transition-colors cursor-pointer"
                 onClick={() => setSelectedGuest(guest)}
               >
                 <CardHeader>
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
                       {guest.name.slice(0, 2)}
                     </div>
                     <div>
-                      <CardTitle>{guest.name}</CardTitle>
-                      <CardDescription>{guest.role}</CardDescription>
+                      <CardTitle className="text-white">{guest.name}</CardTitle>
+                      <CardDescription className="text-slate-400">{guest.role}</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="flex justify-between items-center">
-                    <Badge variant="secondary">{guest.episodes.length} 集</Badge>
-                    <span className="text-sm text-gray-500">{guest.totalViews.toLocaleString()} 次观看</span>
+                    <Badge variant="secondary" className="bg-slate-700 text-slate-200">
+                      {guest.episodes.length} 集
+                    </Badge>
+                    <span className="text-sm text-slate-400">
+                      {guest.totalViews.toLocaleString()} 次观看
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -2605,36 +2608,43 @@ const KnowledgeUniverse = () => {
 
       {/* Selected guest sidebar */}
       {selectedGuest && (
-        <div className="fixed inset-y-0 right-0 w-96 bg-white shadow-xl p-6 overflow-auto">
+        <div className="fixed inset-y-0 right-0 w-96 bg-slate-800 border-l border-slate-700 p-6 overflow-auto">
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-4 right-4"
+            className="absolute top-4 right-4 text-slate-400 hover:text-white"
             onClick={() => setSelectedGuest(null)}
           >
             <X className="h-4 w-4" />
           </Button>
           
-          <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
-          <p className="text-gray-500 mb-4">{selectedGuest.role}</p>
+          <h2 className="text-2xl font-bold mb-2 text-white">{selectedGuest.name}</h2>
+          <p className="text-slate-400 mb-4">{selectedGuest.role}</p>
           
           <div className="space-y-4">
             {selectedGuest.episodes.map((episode, index) => (
               <Card 
                 key={index}
-                className="hover:bg-gray-50 transition-colors cursor-pointer"
+                className="bg-slate-700 border-slate-600 hover:bg-slate-600 transition-colors cursor-pointer"
                 onClick={() => setSelectedVideo(episode)}
               >
                 <CardHeader>
-                  <CardTitle className="text-base flex items-center">
-                    <Video className="w-4 h-4 mr-2 text-blue-500" />
+                  <CardTitle className="text-base flex items-center text-white">
+                    <Video className="w-4 h-4 mr-2 text-blue-400" />
                     {episode.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex justify-between items-center text-sm text-gray-500">
-                    <span>{episode.views.toLocaleString()} 次观看</span>
-                    <Button variant="ghost" size="sm" asChild>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-slate-400">
+                      {episode.views.toLocaleString()} 次观看
+                    </span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-slate-400 hover:text-white"
+                      asChild
+                    >
                       <a 
                         href={episode.url} 
                         target="_blank" 
@@ -2651,8 +2661,8 @@ const KnowledgeUniverse = () => {
             ))}
           </div>
 
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <div className="text-sm text-gray-500">
+          <div className="mt-4 pt-4 border-t border-slate-700">
+            <div className="text-sm text-slate-400">
               总观看: {selectedGuest.totalViews.toLocaleString()}
             </div>
           </div>
