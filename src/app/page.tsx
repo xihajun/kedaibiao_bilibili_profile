@@ -2524,10 +2524,18 @@ const KnowledgeUniverse = () => {
 
   const filteredGuests = sortedGuests.filter((guest) => {
     const lowerSearch = searchTerm.toLowerCase();
-    return guest.name.toLowerCase().includes(lowerSearch) || 
-           (guest.role && guest.role.toLowerCase().includes(lowerSearch));
+    
+    const matchesName = guest.name.toLowerCase().includes(lowerSearch);
+    const matchesRole = guest.role && guest.role.toLowerCase().includes(lowerSearch);
+    
+    // 新增对 episodes 的判断
+    const matchesEpisode = guest.episodes && guest.episodes.some(episode => {
+      return episode.title && episode.title.toLowerCase().includes(lowerSearch);
+    });
+    
+    return matchesName || matchesRole || matchesEpisode;
   });
-
+  
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
     const match = url.match(regex);
