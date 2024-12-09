@@ -1,13 +1,11 @@
-"use client";
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Search, Video, X, ExternalLink } from 'lucide-react';
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 const KnowledgeUniverse = () => {
   const [selectedGuest, setSelectedGuest] = useState(null);
@@ -2506,40 +2504,28 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-  const sortedGuests = [...allGuests].sort((a, b) => b.totalViews - a.totalViews);
-
-  const filteredGuests = sortedGuests.filter((guest) => {
+  const filteredGuests = allGuests.filter((guest) => {
     const lowerSearch = searchTerm.toLowerCase();
-    
-    const matchesName = guest.name.toLowerCase().includes(lowerSearch);
-    const matchesRole = guest.role && guest.role.toLowerCase().includes(lowerSearch);
-    
-    const matchesEpisode = guest.episodes && guest.episodes.some(episode => {
-      return episode.title && episode.title.toLowerCase().includes(lowerSearch);
-    });
-    
-    return matchesName || matchesRole || matchesEpisode;
+    return guest.name.toLowerCase().includes(lowerSearch) ||
+           guest.role.toLowerCase().includes(lowerSearch) ||
+           guest.episodes.some(ep => ep.title.toLowerCase().includes(lowerSearch));
   });
-  
+
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
     const match = url.match(regex);
-    if (match && match[1]) {
-      return `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0`;
-    }
-    return url;
+    return match ? `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0` : url;
   };
 
   const VideoDialog = ({ video, onClose }) => {
     if (!video?.url) return null;
-
     const embedURL = getBilibiliEmbedURL(video.url);
 
     return (
       <Dialog open={!!video} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[80vw] h-[80vh] p-0 flex flex-col items-center justify-center bg-black rounded-lg shadow-xl overflow-hidden">
+        <DialogContent className="max-w-4xl h-full p-0">
           <DialogTitle className="sr-only">{video.title}</DialogTitle>
-          <div className="w-full h-full">
+          <div className="w-full h-96">
             <iframe
               className="w-full h-full"
               src={embedURL}
@@ -2555,30 +2541,37 @@ const KnowledgeUniverse = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+    <div className="w-full min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">课代表的嘉宾们</h1>
-          <div className="relative w-64">
-            <Input
-              type="text"
-              placeholder="搜索嘉宾或话题..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+        <div className="max-w-6xl mx-auto py-4 px-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold">课代表的嘉宾们</h1>
+            <div className="relative w-64">
+              <Input
+                type="text"
+                placeholder="搜索嘉宾或话题..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-6xl mx-auto px-4 py-8">
         {filteredGuests.length === 0 ? (
-          <div className="text-gray-500 text-center mt-10">暂无匹配的嘉宾</div>
+          <Alert>
+            <AlertTitle>没有找到结果</AlertTitle>
+            <AlertDescription>
+              暂无匹配的嘉宾，请尝试其他搜索词
+            </AlertDescription>
+          </Alert>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredGuests.map((guest) => (
               <Card 
                 key={guest.id} 
@@ -2610,7 +2603,7 @@ const KnowledgeUniverse = () => {
 
       {/* Selected guest sidebar */}
       {selectedGuest && (
-        <div className="fixed inset-y-0 right-0 w-96 max-w-full bg-white shadow-xl p-6 overflow-hidden flex flex-col">
+        <div className="fixed inset-y-0 right-0 w-96 bg-white shadow-xl p-6 overflow-auto">
           <Button
             variant="ghost"
             size="icon"
@@ -2619,37 +2612,43 @@ const KnowledgeUniverse = () => {
           >
             <X className="h-4 w-4" />
           </Button>
+          
           <h2 className="text-2xl font-bold mb-2">{selectedGuest.name}</h2>
           <p className="text-gray-500 mb-4">{selectedGuest.role}</p>
-          <ScrollArea className="flex-1 -mx-6 px-6">
-            <div className="space-y-4">
-              {selectedGuest.episodes.map((episode, index) => (
-                <Card 
-                  key={index} 
-                  className="hover:bg-gray-50 transition-colors cursor-pointer"
-                  onClick={() => setSelectedVideo(episode)}
-                >
-                  <CardHeader>
-                    <CardTitle className="text-base flex items-center">
-                      <Video className="w-4 h-4 mr-2 text-blue-500" />
-                      {episode.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between items-center text-sm text-gray-500">
-                      <span>{episode.views.toLocaleString()} 次观看</span>
-                      <Button variant="ghost" size="sm" asChild>
-                        <a href={episode.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          查看原视频
-                        </a>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </ScrollArea>
+          
+          <div className="space-y-4">
+            {selectedGuest.episodes.map((episode, index) => (
+              <Card 
+                key={index}
+                className="hover:bg-gray-50 transition-colors cursor-pointer"
+                onClick={() => setSelectedVideo(episode)}
+              >
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center">
+                    <Video className="w-4 h-4 mr-2 text-blue-500" />
+                    {episode.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between items-center text-sm text-gray-500">
+                    <span>{episode.views.toLocaleString()} 次观看</span>
+                    <Button variant="ghost" size="sm" asChild>
+                      <a 
+                        href={episode.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-1" />
+                        查看原视频
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
           <div className="mt-4 pt-4 border-t border-gray-200">
             <div className="text-sm text-gray-500">
               总观看: {selectedGuest.totalViews.toLocaleString()}
@@ -2665,4 +2664,3 @@ const KnowledgeUniverse = () => {
 };
 
 export default KnowledgeUniverse;
-
