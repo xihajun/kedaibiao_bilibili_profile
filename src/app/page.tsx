@@ -2565,6 +2565,7 @@ const KnowledgeUniverse = () => {
     "totalViews": 279262
   }
 ];
+  
 
   const mainGuests = [...allGuests]
     .sort((a, b) => b.totalViews - a.totalViews)
@@ -2627,6 +2628,14 @@ const KnowledgeUniverse = () => {
       </Dialog>
     );
   };
+
+  // 根据当前选中的Category进行过滤
+  const filteredMainGuests = selectedCategory
+    ? mainGuests.filter(guest => guest.category === selectedCategory)
+    : [];
+  const filteredGuestStars = selectedCategory
+    ? guestStars.filter(guest => guest.category === selectedCategory)
+    : [];
 
   return (
     <div
@@ -2693,73 +2702,69 @@ const KnowledgeUniverse = () => {
           })}
 
           {/* Main Guests */}
-          {selectedCategory && mainGuests
-            .filter(guest => guest.category === selectedCategory)
-            .map((guest, index, filteredArray) => {
-              const radius = 250;
-              const position = calculateOrbitPosition(
-                index, 
-                filteredArray.length, 
-                radius,
-                Math.PI / 4
-              );
-              return (
-                <div
-                  key={guest.id}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 interactive"
-                  style={position}
+          {filteredMainGuests.map((guest, index, filteredArray) => {
+            const radius = 250;
+            const position = calculateOrbitPosition(
+              index, 
+              filteredArray.length, 
+              radius,
+              Math.PI / 4
+            );
+            return (
+              <div
+                key={guest.id}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 interactive"
+                style={position}
+              >
+                <div 
+                  className={`w-24 h-24 rounded-full cursor-pointer
+                  bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
+                  flex items-center justify-center
+                  transition-all duration-300 hover:scale-110 shadow-lg
+                  animate-fadeIn`}
+                  onClick={() => setSelectedGuest(guest)}
                 >
-                  <div 
-                    className={`w-24 h-24 rounded-full cursor-pointer
-                    bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                    flex items-center justify-center
-                    transition-all duration-300 hover:scale-110 shadow-lg
-                    animate-fadeIn`}
-                    onClick={() => setSelectedGuest(guest)}
-                  >
-                    <User size={36} className="text-white" />
-                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center w-32">
-                      <div className="text-sm font-bold truncate">{guest.name}</div>
-                      <div className="text-xs text-gray-300 truncate">{guest.role?.split(',')[0]}</div>
-                    </div>
+                  <User size={36} className="text-white" />
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center w-32">
+                    <div className="text-sm font-bold truncate">{guest.name}</div>
+                    <div className="text-xs text-gray-300 truncate">{guest.role?.split(',')[0]}</div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
 
           {/* Guest Stars */}
-          {selectedCategory && guestStars
-            .filter(guest => guest.category === selectedCategory)
-            .map((guest, index, filteredArray) => {
-              const radius = 350;
-              const position = calculateOrbitPosition(
-                index,
-                filteredArray.length,
-                radius,
-                Math.PI / 3
-              );
-              return (
-                <div
-                  key={guest.id}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 interactive"
-                  style={position}
+          {filteredGuestStars.map((guest, index, filteredArray) => {
+            const radius = 350;
+            const position = calculateOrbitPosition(
+              index,
+              filteredArray.length,
+              radius,
+              Math.PI / 3
+            );
+            return (
+              <div
+                key={guest.id}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 transition-all duration-500 interactive"
+                style={position}
+              >
+                <div 
+                  className={`w-16 h-16 rounded-full cursor-pointer
+                  bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
+                  flex items-center justify-center
+                  transition-all duration-300 hover:scale-110 shadow-lg
+                  animate-fadeIn`}
+                  onClick={() => setSelectedGuest(guest)}
                 >
-                  <div 
-                    className={`w-16 h-16 rounded-full cursor-pointer
-                    bg-gradient-to-r ${categories[guest.category]?.color || 'from-gray-400 to-gray-600'}
-                    flex items-center justify-center
-                    transition-all duration-300 hover:scale-110 shadow-lg
-                    animate-fadeIn`}
-                    onClick={() => setSelectedGuest(guest)}
-                  >
-                    <Star size={24} className="text-white" />
-                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
-                      <div className="text-xs font-bold truncate">{guest.name}</div>
-                    </div>
+                  <Star size={24} className="text-white" />
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-center w-24">
+                    <div className="text-xs font-bold truncate">{guest.name}</div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </div>
 
