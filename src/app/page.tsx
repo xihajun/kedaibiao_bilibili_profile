@@ -1676,7 +1676,7 @@ const KnowledgeUniverse = () => {
     "totalViews": 10349
   },
   {
-    "name": "孫玉珍",
+    "name": "课代表本代表",
     "role": "Data Scientist",
     "category": "['technical_career']",
     "id": 57,
@@ -2471,12 +2471,13 @@ const KnowledgeUniverse = () => {
            guest.episodes.some(ep => ep.title.toLowerCase().includes(lowerSearch));
   });
 
+  
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
     const match = url.match(regex);
     return match ? `https://player.bilibili.com/player.html?bvid=${match[1]}&autoplay=0` : url;
   };
-
+  
   const VideoDialog = ({ video, onClose }) => {
     if (!video?.url) return null;
     const embedURL = getBilibiliEmbedURL(video.url);
@@ -2500,7 +2501,16 @@ const KnowledgeUniverse = () => {
       </Dialog>
     );
   };
-
+ // 排序 episodes
+  const sortedEpisodes = selectedGuest
+    ? [...selectedGuest.episodes].sort((a, b) => {
+        if (a.views && b.views) {
+          return b.views - a.views; // 按播放量从高到低排序
+        }
+        return a.views ? -1 : 1; // 无播放量的排后面
+      })
+    : [];
+  
   return (
     <div className="w-full min-h-screen bg-slate-900">
       {/* Header */}
@@ -2582,8 +2592,8 @@ const KnowledgeUniverse = () => {
           <p className="text-slate-400 mb-4">{selectedGuest.role}</p>
           
           <div className="space-y-4">
-            {selectedGuest.episodes.map((episode, index) => (
-              <Card 
+            {sortedEpisodes.map((episode, index) => (
+              <Card
                 key={index}
                 className="bg-slate-700 border-slate-600 hover:bg-slate-600 transition-colors cursor-pointer"
                 onClick={() => setSelectedVideo(episode)}
@@ -2597,18 +2607,20 @@ const KnowledgeUniverse = () => {
                 <CardContent>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-slate-400">
-                      {episode.views.toLocaleString()} 次观看
+                      {episode.views
+                        ? `${episode.views.toLocaleString()} 次观看`
+                        : "暂无播放量"}
                     </span>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       className="text-slate-400 hover:text-white"
                       asChild
                     >
-                      <a 
-                        href={episode.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <a
+                        href={episode.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <ExternalLink className="w-4 h-4 mr-1" />
