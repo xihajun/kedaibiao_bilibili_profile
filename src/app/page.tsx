@@ -571,41 +571,6 @@ const KnowledgeUniverse = () => {
         "views": 844,
         "url": "https://www.bilibili.com/video/BV1HH4y1D7Mf",
         "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "对话顶级科学家半小时，收获大于读半年书？｜中美科研差距有多大？｜理想主义如何驱动科技进步｜Kevin教授_1/3",
-        "views": 60255,
-        "url": "https://www.bilibili.com/video/BV18w411772U",
-        "uploadTime": "1 month ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "MIT教授：我能理解，科学的尽头是信仰",
-        "views": 10689,
-        "url": "https://www.bilibili.com/video/BV1Vj421X7i2",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "与MIT教授畅聊科学方法与玄学世界观",
-        "views": 3219,
-        "url": "https://www.bilibili.com/video/BV1kF411S7g6",
-        "uploadTime": "2 days ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "MIT教授讲解实验到底多厉害，以及为什么科技研究不能太追求落地？",
-        "views": 2054,
-        "url": "https://www.bilibili.com/video/BV1m14y167xk",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "MIT教授vs.康奈尔博士：科学重要吗？｜Kevin教授_3/3",
-        "views": 26936,
-        "url": "https://www.bilibili.com/video/BV1wm411C72W",
-        "uploadTime": "3 days ago"
       }
     ],
     "totalViews": 103997
@@ -664,13 +629,6 @@ const KnowledgeUniverse = () => {
         "views": 18660,
         "url": "https://www.bilibili.com/video/BV1TJ4m1Y71W",
         "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "全网最资深经验分享，助您降维打击一切面试",
-        "views": 31346,
-        "url": "https://www.bilibili.com/video/BV1pP4y1E76m",
-        "uploadTime": "1 month ago"
       }
     ],
     "totalViews": 167279
