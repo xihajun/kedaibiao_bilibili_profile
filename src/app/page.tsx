@@ -2550,9 +2550,17 @@ const KnowledgeUniverse = () => {
                 onClick={() => setSelectedGuest(guest)}
               >
                 <CardHeader>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
-                      {guest.name.slice(0, 2)}
+<div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img
+                        src={`https://raw.githubusercontent.com/xihajun/kedaibiao_bilibili_profile/refs/heads/main/images/${guest.id}/face_0.png`}
+                        alt={guest.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="%232563eb"/><text x="50%" y="50%" fill="white" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16" font-weight="bold">${guest.name.slice(0, 2)}</text></svg>`;
+                        }}
+                      />
                     </div>
                     <div>
                       <CardTitle className="text-white">{guest.name}</CardTitle>
