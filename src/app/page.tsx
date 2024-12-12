@@ -787,16 +787,14 @@ const KnowledgeUniverse = () => {
         "views": 10346,
         "url": "https://www.bilibili.com/video/BV1vT421Q7sT",
         "uploadTime": "unknown"
-      }
-    ],
-    "totalViews": 23412
-  },
-  {
-    "name": "Mike Vernal",
-    "role": "Venture Capitalist, Former VP at Meta",
-    "category": "['entrepreneurship']",
-    "id": 21,
-    "episodes": [
+      },
+      {
+        "platform": "bilibili",
+        "title": "Mike Vernal聊公司生命周期，管理，文化，创始人",
+        "views": 3506,
+        "url": "https://www.bilibili.com/video/BV13D421A7ko",
+        "uploadTime": "unknown"
+      },
       {
         "platform": "bilibili",
         "title": "Mike Vernal聊公司生命周期，管理，文化，创始人",
@@ -805,23 +803,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 3506
-  },
-  {
-    "name": "Nan Zhou",
-    "role": "Director at Qualcomm Ventures",
-    "category": "['entrepreneurship']",
-    "id": 22,
-    "episodes": [
-      {
-        "platform": "bilibili",
-        "title": "「门当户对」的职业更长久？｜高通创投director介绍VC经验",
-        "views": 4877,
-        "url": "https://www.bilibili.com/video/BV1im421L7n8",
-        "uploadTime": "unknown"
-      }
-    ],
-    "totalViews": 4877
+    "totalViews": 23412
   },
   {
     "name": "Nan Zhou",
@@ -849,25 +831,16 @@ const KnowledgeUniverse = () => {
         "views": 3988,
         "url": "https://www.bilibili.com/video/BV1Pw4m1D7kP",
         "uploadTime": "Not specified"
+      },
+      {
+        "platform": "bilibili",
+        "title": "「门当户对」的职业更长久？｜高通创投director介绍VC经验",
+        "views": 4877,
+        "url": "https://www.bilibili.com/video/BV1im421L7n8",
+        "uploadTime": "unknown"
       }
     ],
     "totalViews": 12045
-  },
-  {
-    "name": "Newton",
-    "role": "Microsoft Programmer and Restaurant Owner",
-    "category": "['entrepreneurship']",
-    "id": 24,
-    "episodes": [
-      {
-        "platform": "bilibili",
-        "title": "全职程序员如何当餐馆老板？｜会员专属8",
-        "views": 3688,
-        "url": "https://www.bilibili.com/video/BV16642137j6",
-        "uploadTime": "Unknown"
-      }
-    ],
-    "totalViews": 3688
   },
   {
     "name": "Newton",
@@ -888,6 +861,13 @@ const KnowledgeUniverse = () => {
         "views": 6014,
         "url": "https://www.bilibili.com/video/BV1w1421D7jr",
         "uploadTime": "2 weeks ago"
+      },
+      {
+        "platform": "bilibili",
+        "title": "全职程序员如何当餐馆老板？｜会员专属8",
+        "views": 3688,
+        "url": "https://www.bilibili.com/video/BV16642137j6",
+        "uploadTime": "Unknown"
       }
     ],
     "totalViews": 10039
@@ -1598,7 +1578,7 @@ const KnowledgeUniverse = () => {
     "totalViews": 6428
   },
   {
-    "name": "卢易",
+    "name": "Monica",
     "role": "创业公司 head of AI, 华盛顿大学客座教授, 前苹果AI",
     "category": "['technical_career']",
     "id": 53,
@@ -1616,16 +1596,7 @@ const KnowledgeUniverse = () => {
         "views": 3944,
         "url": "https://www.bilibili.com/video/BV1N8411q7HA",
         "uploadTime": "2 weeks ago"
-      }
-    ],
-    "totalViews": 14747
-  },
-  {
-    "name": "卢毅",
-    "role": "Head of AI at a startup, Guest Professor at University of Washington, Former AI Researcher at Apple",
-    "category": "['technical_career']",
-    "id": 54,
-    "episodes": [
+      },
       {
         "platform": "bilibili",
         "title": "ChatGPT的信念与没走的捷径｜对LLM的常见理解误区｜垂类模型有前途吗？｜大语言模型技术深度访谈1/3",
@@ -1634,7 +1605,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "1 week ago"
       }
     ],
-    "totalViews": 12719
+    "totalViews": 14747
   },
   {
     "name": "吴晶辰",
@@ -1687,6 +1658,13 @@ const KnowledgeUniverse = () => {
         "views": 3068,
         "url": "https://www.bilibili.com/video/BV1ja411f7ak",
         "uploadTime": "2 weeks ago"
+      },
+      {
+        "platform": "bilibili",
+        "title": "“个人品牌/副业”是自媒体的陷阱？历史收入揭秘｜领航分享",
+        "views": 3966,
+        "url": "https://www.bilibili.com/video/BV1Cx4y167Wx",
+        "uploadTime": "not available"
       }
     ],
     "totalViews": 3068
@@ -1871,22 +1849,6 @@ const KnowledgeUniverse = () => {
     "totalViews": 13548
   },
   {
-    "name": "李正",
-    "role": "自媒体创作者",
-    "category": "['entrepreneurship']",
-    "id": 67,
-    "episodes": [
-      {
-        "platform": "bilibili",
-        "title": "“个人品牌/副业”是自媒体的陷阱？历史收入揭秘｜领航分享",
-        "views": 3966,
-        "url": "https://www.bilibili.com/video/BV1Cx4y167Wx",
-        "uploadTime": "not available"
-      }
-    ],
-    "totalViews": 3966
-  },
-  {
     "name": "杨小露",
     "role": "亚马逊Principal PM",
     "category": "['work_life', 'work_life']",
@@ -1971,10 +1933,11 @@ const KnowledgeUniverse = () => {
   },
   {
     "name": "熊力",
-    "role": "Databricks Engineering Manager",
+    "role": "Databricks Engineering Manager, Former Senior Manager at Microsoft",
     "category": "['job_search']",
-    "id": 71,
+    "id": 72,
     "episodes": [
+
       {
         "platform": "bilibili",
         "title": "如何选老板和团队？｜找工作口碑最重要？｜IPO前加入Databricks需要注意什么？ ｜Databricks招聘经理访谈_下",
@@ -2002,16 +1965,7 @@ const KnowledgeUniverse = () => {
         "views": 5768,
         "url": "https://www.bilibili.com/video/BV14vDFY2E2D",
         "uploadTime": "unknown"
-      }
-    ],
-    "totalViews": 18447
-  },
-  {
-    "name": "熊力",
-    "role": "Databricks Engineering Manager, Former Senior Manager at Microsoft",
-    "category": "['job_search']",
-    "id": 72,
-    "episodes": [
+      },
       {
         "platform": "bilibili",
         "title": "刷题+海投已失效，好工作需要这三件事｜Databricks招聘经理访谈 - 上",
@@ -2101,16 +2055,7 @@ const KnowledgeUniverse = () => {
         "views": 7420,
         "url": "https://www.bilibili.com/video/BV1EV411m7Ne",
         "uploadTime": "unknown"
-      }
-    ],
-    "totalViews": 9603
-  },
-  {
-    "name": "王晨璐",
-    "role": "数据科学家",
-    "category": "['job_search']",
-    "id": 76,
-    "episodes": [
+      },
       {
         "platform": "bilibili",
         "title": "互联网大厂对数据科学家的能力要求 | 数据科学家找工作系列1/3",
@@ -2119,8 +2064,9 @@ const KnowledgeUniverse = () => {
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 10056
+    "totalViews": 9603
   },
+
   {
     "name": "罗超元",
     "role": "腾讯应届生，管培",
