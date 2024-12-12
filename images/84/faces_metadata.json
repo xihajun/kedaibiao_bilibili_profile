@@ -1,0 +1,28 @@
+[
+  {
+    "filename": "face_0.png",
+    "bbox": [
+      1130,
+      253,
+      1338,
+      495
+    ],
+    "face_area": 50336,
+    "symmetry_ratio": 2.793337106704712,
+    "confidence": 0.8712952136993408,
+    "is_frontal": false
+  },
+  {
+    "filename": "face_1.png",
+    "bbox": [
+      426,
+      189,
+      606,
+      417
+    ],
+    "face_area": 41040,
+    "symmetry_ratio": 2.4170453548431396,
+    "confidence": 0.8728567361831665,
+    "is_frontal": false
+  }
+]
