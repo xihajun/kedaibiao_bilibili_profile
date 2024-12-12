@@ -1435,22 +1435,6 @@ const KnowledgeUniverse = () => {
   {
     "name": "俞奕舟",
     "role": "Meta程序员",
-    "category": "['leadership']",
-    "id": 47,
-    "episodes": [
-      {
-        "platform": "bilibili",
-        "title": "如何坚持自己观点并说服他人？",
-        "views": 5415,
-        "url": "https://www.bilibili.com/video/BV1FM4m1y73T",
-        "uploadTime": "2 weeks ago"
-      }
-    ],
-    "totalViews": 5415
-  },
-  {
-    "name": "俞奕舟",
-    "role": "软件工程师",
     "category": "['work_life']",
     "id": 48,
     "episodes": [
@@ -1460,6 +1444,13 @@ const KnowledgeUniverse = () => {
         "views": 3965,
         "url": "https://www.bilibili.com/video/BV1R4421f7pZ",
         "uploadTime": "1周前"
+      },
+      {
+        "platform": "bilibili",
+        "title": "如何坚持自己观点并说服他人？",
+        "views": 5415,
+        "url": "https://www.bilibili.com/video/BV1FM4m1y73T",
+        "uploadTime": "2 weeks ago"
       }
     ],
     "totalViews": 3965
