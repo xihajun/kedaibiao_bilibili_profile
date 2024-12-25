@@ -265,51 +265,9 @@ const KnowledgeUniverse = () => {
         "views": 4633,
         "url": "https://www.bilibili.com/video/BV1Ck4y1u7dd",
         "uploadTime": "3 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "主动掌控工作｜Doordash分析经理访谈2/3",
-        "views": 16174,
-        "url": "https://www.bilibili.com/video/BV18X4y177ic",
-        "uploadTime": "2 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "升职加薪的意义是什么来着？｜DoorDash分析经理访谈 3/3",
-        "views": 4633,
-        "url": "https://www.bilibili.com/video/BV1Ck4y1u7dd",
-        "uploadTime": "3 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "主动掌控工作｜Doordash分析经理访谈2/3",
-        "views": 16174,
-        "url": "https://www.bilibili.com/video/BV18X4y177ic",
-        "uploadTime": "2 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "升职加薪的意义是什么来着？｜DoorDash分析经理访谈 3/3",
-        "views": 4633,
-        "url": "https://www.bilibili.com/video/BV1Ck4y1u7dd",
-        "uploadTime": "3 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "主动掌控工作｜Doordash分析经理访谈2/3",
-        "views": 16174,
-        "url": "https://www.bilibili.com/video/BV18X4y177ic",
-        "uploadTime": "2 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "升职加薪的意义是什么来着？｜DoorDash分析经理访谈 3/3",
-        "views": 4633,
-        "url": "https://www.bilibili.com/video/BV1Ck4y1u7dd",
-        "uploadTime": "3 weeks ago"
       }
     ],
-    "totalViews": 69376
+    "totalViews": 27762
   },
   {
     "name": "Eugene Wang",
@@ -430,48 +388,6 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "听懂这一件事，每天都能提高自己的沟通能力",
-        "views": 26595,
-        "url": "https://www.bilibili.com/video/BV1f3411f7Vg",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何「不靠运气」也能火箭速度升职？",
-        "views": 14567,
-        "url": "https://www.bilibili.com/video/BV1n3411f7Gt",
-        "uploadTime": "1 week ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何得到intellectual honesty？｜硅谷徐老师P3完整版",
-        "views": 3770,
-        "url": "https://www.bilibili.com/video/BV17T4y1x72V",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何得到intellectual honesty？｜硅谷徐老师P3完整版",
-        "views": 3770,
-        "url": "https://www.bilibili.com/video/BV17T4y1x72V",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "天之骄子进大厂，有被浪费吗？｜如何多学知识并融会贯通｜应届生采访4",
-        "views": 13648,
-        "url": "https://www.bilibili.com/video/BV1Gi4y1m75c",
-        "uploadTime": "1 week ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何得到intellectual honesty？｜硅谷徐老师P3完整版",
-        "views": 3770,
-        "url": "https://www.bilibili.com/video/BV17T4y1x72V",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
         "title": "天之骄子进大厂，有被浪费吗？｜如何多学知识并融会贯通｜应届生采访4",
         "views": 13648,
         "url": "https://www.bilibili.com/video/BV1Gi4y1m75c",
@@ -483,13 +399,6 @@ const KnowledgeUniverse = () => {
         "views": 538928,
         "url": "https://www.bilibili.com/video/BV1md4y1v7hk",
         "uploadTime": "2 months ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "2024创业需要注意什么？｜硅谷徐老师访谈P2_完整版",
-        "views": 3298,
-        "url": "https://www.bilibili.com/video/BV1CN4y1s7HU",
-        "uploadTime": "2 days ago"
       },
       {
         "platform": "bilibili",
@@ -514,13 +423,6 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "中国SaaS公司为什么不赚钱？",
-        "views": 73844,
-        "url": "https://www.bilibili.com/video/BV1DB4y1j7Cc",
-        "uploadTime": "3 days ago"
-      },
-      {
-        "platform": "bilibili",
         "title": "历史钟摆原理｜微软今天的种子，桑提亚二十年前就在播种了？｜硅谷徐老师深度访谈",
         "views": 6237,
         "url": "https://www.bilibili.com/video/BV1Gz421B7cn",
@@ -532,16 +434,9 @@ const KnowledgeUniverse = () => {
         "views": 5024,
         "url": "https://www.bilibili.com/video/BV1AVHReuEM9",
         "uploadTime": "3 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "历史钟摆原理｜微软今天的种子，桑提亚二十年前就在播种了？｜硅谷徐老师深度访谈",
-        "views": 6237,
-        "url": "https://www.bilibili.com/video/BV1Gz421B7cn",
-        "uploadTime": "unknown"
       }
     ],
-    "totalViews": 915081
+    "totalViews": 765582
   },
   {
     "name": "Kathy and Ashley",
@@ -573,7 +468,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 103997
+    "totalViews": 844
   },
   {
     "name": "Kevin Chen",
@@ -631,7 +526,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 167279
+    "totalViews": 135933
   },
   {
     "name": "Leon",
@@ -659,20 +554,6 @@ const KnowledgeUniverse = () => {
         "views": 16001,
         "url": "https://www.bilibili.com/video/BV16V4y117n2",
         "uploadTime": "1 month ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "LuluLeon谈教育_下",
-        "views": 4929,
-        "url": "https://www.bilibili.com/video/BV1am411C7zA",
-        "uploadTime": "3 days ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何摆脱无意义的工作？",
-        "views": 106110,
-        "url": "https://www.bilibili.com/video/BV1Jc411A75X",
-        "uploadTime": "unknown"
       },
       {
         "platform": "bilibili",
@@ -722,44 +603,9 @@ const KnowledgeUniverse = () => {
         "views": 113082,
         "url": "https://www.bilibili.com/video/BV1hm411S7AE",
         "uploadTime": "a few days ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "想清楚这些，才能成为财富的主人",
-        "views": 25973,
-        "url": "https://www.bilibili.com/video/BV1314y1Q7Ba",
-        "uploadTime": "3 weeks ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "什么才是真正的财富和自由？",
-        "views": 29622,
-        "url": "https://www.bilibili.com/video/BV18q4y1Q7ZT",
-        "uploadTime": "最近"
-      },
-      {
-        "platform": "bilibili",
-        "title": "鸡娃错在哪里？AI时代如何教育孩子？｜Leonlulu谈教育_上",
-        "views": 9181,
-        "url": "https://www.bilibili.com/video/BV1Kr421G7k1",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "AI时代，中国家长如何做好家庭教育？｜Lululeon谈教育-上",
-        "views": 7596,
-        "url": "https://www.bilibili.com/video/BV1dZ421T75s",
-        "uploadTime": "1月前"
-      },
-      {
-        "platform": "bilibili",
-        "title": "如何超越中产阶级？｜Leon谈财富_下",
-        "views": 113082,
-        "url": "https://www.bilibili.com/video/BV1hm411S7AE",
-        "uploadTime": "a few days ago"
       }
     ],
-    "totalViews": 804495
+    "totalViews": 508002
   },
   {
     "name": "Mike Vernal",
@@ -783,27 +629,13 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "前Meta高管，红杉合伙人：为什么大厂不应该裁员80%？",
-        "views": 10346,
-        "url": "https://www.bilibili.com/video/BV1vT421Q7sT",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "Mike Vernal聊公司生命周期，管理，文化，创始人",
-        "views": 3506,
-        "url": "https://www.bilibili.com/video/BV13D421A7ko",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
         "title": "Mike Vernal聊公司生命周期，管理，文化，创始人",
         "views": 3506,
         "url": "https://www.bilibili.com/video/BV13D421A7ko",
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 23412
+    "totalViews": 16572
   },
   {
     "name": "Nan Zhou",
@@ -827,20 +659,13 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "打入美国主流创投的华人--为什么(不)是你？｜大厂打工如何接触投资行业？",
-        "views": 3988,
-        "url": "https://www.bilibili.com/video/BV1Pw4m1D7kP",
-        "uploadTime": "Not specified"
-      },
-      {
-        "platform": "bilibili",
         "title": "「门当户对」的职业更长久？｜高通创投director介绍VC经验",
         "views": 4877,
         "url": "https://www.bilibili.com/video/BV1im421L7n8",
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 12045
+    "totalViews": 12934
   },
   {
     "name": "Newton",
@@ -870,7 +695,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "Unknown"
       }
     ],
-    "totalViews": 10039
+    "totalViews": 13727
   },
   {
     "name": "OE_Ben",
@@ -1156,16 +981,9 @@ const KnowledgeUniverse = () => {
         "views": 62017,
         "url": "https://www.bilibili.com/video/BV1UW4y1A7Pn",
         "uploadTime": "Unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "数据科学家在中国跟美国的工资",
-        "views": 62017,
-        "url": "https://www.bilibili.com/video/BV1UW4y1A7Pn",
-        "uploadTime": "Unknown"
       }
     ],
-    "totalViews": 142426
+    "totalViews": 80409
   },
   {
     "name": "Tim Chan",
@@ -1186,16 +1004,9 @@ const KnowledgeUniverse = () => {
         "views": 767,
         "url": "https://www.bilibili.com/video/BV1T94y1b7W5",
         "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "How to say NO to your stakeholders?",
-        "views": 767,
-        "url": "https://www.bilibili.com/video/BV1T94y1b7W5",
-        "uploadTime": "unknown"
       }
     ],
-    "totalViews": 22516
+    "totalViews": 21749
   },
   {
     "name": "Tristan崔老师",
@@ -1235,13 +1046,6 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "Facebook印度高管，创业一年的体验",
-        "views": 17224,
-        "url": "https://www.bilibili.com/video/BV1QY41197iD",
-        "uploadTime": "1 month ago"
-      },
-      {
-        "platform": "bilibili",
         "title": "【纯英文纯干货预警】硅谷顶级的AB Testing工具竟然这么厉害？｜Statsig CEO产品演示",
         "views": 7259,
         "url": "https://www.bilibili.com/video/BV1k64y1477K",
@@ -1255,7 +1059,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "1个月前"
       }
     ],
-    "totalViews": 73614
+    "totalViews": 56390
   },
   {
     "name": "Vivian Wang",
@@ -1290,30 +1094,9 @@ const KnowledgeUniverse = () => {
         "views": 30065,
         "url": "https://www.bilibili.com/video/BV1VM4m117c4",
         "uploadTime": "1 month ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "大厂员工的创业误区｜Vivian访谈2/2",
-        "views": 5211,
-        "url": "https://www.bilibili.com/video/BV12Z421N7dm",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "前高管解密升职加薪的游戏规则 -- 情绪价值｜Vivian 访谈 1/2",
-        "views": 8999,
-        "url": "https://www.bilibili.com/video/BV1Ez421i7zh",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "升职本质是给老板提供情绪价值？｜Vivian访谈1/2",
-        "views": 30065,
-        "url": "https://www.bilibili.com/video/BV1VM4m117c4",
-        "uploadTime": "1 month ago"
       }
     ],
-    "totalViews": 92402
+    "totalViews": 48127
   },
   {
     "name": "Yujie",
@@ -1453,7 +1236,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "2 weeks ago"
       }
     ],
-    "totalViews": 3965
+    "totalViews": 9380
   },
   {
     "name": "光芒",
@@ -1514,27 +1297,13 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "聊完我对Web3黑转粉了，你呢？",
-        "views": 18042,
-        "url": "https://www.bilibili.com/video/BV1TG411L7ax",
-        "uploadTime": "1 month ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "华人在硅谷怎么做(不)到VP？",
-        "views": 279262,
-        "url": "https://www.bilibili.com/video/BV1zM4y137h1",
-        "uploadTime": "3天前"
-      },
-      {
-        "platform": "bilibili",
         "title": "从谷歌总监到创业公司CTO，都来一遍的大佬教你怎么选？｜Fintech到底是干嘛的？｜不精致利己也能赚钱？｜投公司看哪三条？",
         "views": 30319,
         "url": "https://www.bilibili.com/video/BV1cg411L7aX",
         "uploadTime": "3 months ago"
       }
     ],
-    "totalViews": 667137
+    "totalViews": 369833
   },
   {
     "name": "刘律师",
@@ -1596,7 +1365,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "1 week ago"
       }
     ],
-    "totalViews": 14747
+    "totalViews": 27466
   },
   {
     "name": "吴晶辰",
@@ -1658,7 +1427,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "not available"
       }
     ],
-    "totalViews": 3068
+    "totalViews": 7034
   },
   {
     "name": "宋明阳",
@@ -1928,7 +1697,6 @@ const KnowledgeUniverse = () => {
     "category": "['job_search']",
     "id": 72,
     "episodes": [
-
       {
         "platform": "bilibili",
         "title": "如何选老板和团队？｜找工作口碑最重要？｜IPO前加入Databricks需要注意什么？ ｜Databricks招聘经理访谈_下",
@@ -1952,20 +1720,13 @@ const KnowledgeUniverse = () => {
       },
       {
         "platform": "bilibili",
-        "title": "从Databricks的人才态度，看懂人才与公司的双向选择｜卷是坏事吗？｜熊力访谈_下",
-        "views": 5768,
-        "url": "https://www.bilibili.com/video/BV14vDFY2E2D",
-        "uploadTime": "unknown"
-      },
-      {
-        "platform": "bilibili",
         "title": "刷题+海投已失效，好工作需要这三件事｜Databricks招聘经理访谈 - 上",
         "views": 12075,
         "url": "https://www.bilibili.com/video/BV1ghSjYhEX8",
         "uploadTime": "2 weeks ago"
       }
     ],
-    "totalViews": 12075
+    "totalViews": 24754
   },
   {
     "name": "王亚雄",
@@ -2016,16 +1777,9 @@ const KnowledgeUniverse = () => {
         "views": 20225,
         "url": "https://www.bilibili.com/video/BV1444y1o74j",
         "uploadTime": "Unknown"
-      },
-      {
-        "platform": "bilibili",
-        "title": "从大厂跳入创业公司，能适应吗？",
-        "views": 20225,
-        "url": "https://www.bilibili.com/video/BV1444y1o74j",
-        "uploadTime": "Unknown"
       }
     ],
-    "totalViews": 59952
+    "totalViews": 39727
   },
   {
     "name": "王晨璐",
@@ -2055,9 +1809,8 @@ const KnowledgeUniverse = () => {
         "uploadTime": "unknown"
       }
     ],
-    "totalViews": 9603
+    "totalViews": 19659
   },
-
   {
     "name": "罗超元",
     "role": "腾讯应届生，管培",
@@ -2116,13 +1869,6 @@ const KnowledgeUniverse = () => {
         "views": 9269,
         "url": "https://www.bilibili.com/video/BV1wm421574q",
         "uploadTime": "about 2 months ago"
-      },
-      {
-        "platform": "bilibili",
-        "title": "用面试和工作提升人生价值｜课代表network秘籍大揭秘",
-        "views": 14120,
-        "url": "https://www.bilibili.com/video/BV1jS4y1j7yx",
-        "uploadTime": "relative time not specified"
       },
       {
         "platform": "bilibili",
@@ -2195,7 +1941,7 @@ const KnowledgeUniverse = () => {
         "uploadTime": "最近上传"
       }
     ],
-    "totalViews": 258949
+    "totalViews": 244829
   },
   {
     "name": "贾扬清",
