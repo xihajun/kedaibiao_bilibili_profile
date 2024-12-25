@@ -2401,13 +2401,14 @@ const KnowledgeUniverse = () => {
   }
 ];
 
-  const filteredGuests = allGuests.filter((guest) => {
-    const lowerSearch = searchTerm.toLowerCase();
-    return guest.name.toLowerCase().includes(lowerSearch) ||
-           guest.role.toLowerCase().includes(lowerSearch) ||
-           guest.episodes.some(ep => ep.title.toLowerCase().includes(lowerSearch));
-  });
-
+  const filteredGuests = allGuests
+    .filter((guest) => {
+      const lowerSearch = searchTerm.toLowerCase();
+      return guest.name.toLowerCase().includes(lowerSearch) ||
+             guest.role.toLowerCase().includes(lowerSearch) ||
+             guest.episodes.some(ep => ep.title.toLowerCase().includes(lowerSearch));
+    })
+    .sort((a, b) => b.totalViews - a.totalViews);
   
   const getBilibiliEmbedURL = (url) => {
     const regex = /bilibili\.com\/video\/(BV\w+)/;
