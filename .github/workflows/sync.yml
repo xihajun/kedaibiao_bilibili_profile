@@ -1,0 +1,94 @@
+name: Sync Google Sheet to JSON (Scheduled)
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering
+
+permissions:
+  contents: write  # This grants permission to push changes to the repository
+
+jobs:
+  check_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install gspread pandas requests
+
+      - name: Fetch Google Sheet data and generate new JSON
+        env:
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }} # Using secret for the Google Sheet ID
+          GOOGLE_SHEET_NAME: 'Sheet1' # Your sheet name
+          OUTPUT_PATH: 'src/data/guests.json' # Updated path for the JSON file
+        run: |
+          import gspread
+          import json
+          import pandas as pd
+          from io import StringIO
+          import os
+
+          # Get environment variables
+          sheet_id = os.getenv("GOOGLE_SHEET_ID")
+          sheet_name = os.getenv("GOOGLE_SHEET_NAME")
+          output_path = os.getenv("OUTPUT_PATH", "src/data/guests.json")
+
+          # Fetch data from public Google Sheet
+          csv_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv'
+          try:
+              data = pd.read_csv(csv_url)
+          except Exception as e:
+              print(f"Error accessing Google Sheet: {e}")
+              exit(1)
+
+          # Convert to desired JSON format
+          json_data_fixed = []
+          for name, group in data.groupby('Name'):
+              person_data = {
+                  "name": name,
+                  "role": group.iloc[0]['Role'],
+                  "id": str(group.iloc[0]['ID']),
+                  "episodes": [
+                      {
+                          "platform": row['Episode Platform'],
+                          "title": row['Episode Title'],
+                          "views": int(row['Views']) if not pd.isna(row['Views']) else None,
+                          "url": row['URL'],
+                          "uploadTime": row['Upload Time']
+                      }
+                      for _, row in group.iterrows()
+                  ],
+                  "totalViews": int(group.iloc[0]['Total Views (Person)']) if not pd.isna(group.iloc[0]['Total Views (Person)']) else None
+              }
+              json_data_fixed.append(person_data)
+
+          # Write JSON to file
+          with open(output_path, 'w', encoding='utf-8') as f:
+              json.dump(json_data_fixed, f, ensure_ascii=False, indent=4)
+
+          print(f"JSON data written to {output_path}")
+        shell: python
+
+      - name: Check for changes and commit if necessary
+        env:
+          OUTPUT_PATH: 'src/data/guests.json' # Updated path for the JSON file
+        run: |
+          OUTPUT_PATH="${{ env.OUTPUT_PATH }}"
+          if [[ -f "$OUTPUT_PATH" ]]; then
+            echo "JSON file exists, comparing content..."
+            git config user.name "GitHub Actions Bot"
+            git config user.email "<>@users.noreply.github.com"
+            git add "$OUTPUT_PATH"
+            git diff --cached --quiet || git commit -m "Update guests.json data (Scheduled)"
+            git push
+          else
+            echo "No JSON file found; nothing to commit."
+          fi
